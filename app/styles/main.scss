@@ -1,0 +1,64 @@
+/*
+IMPORTANT NOTE:
+ This file SHOULD NOT BE EDITED MANUALLY, as its purpose
+ is to be the point where all your stylesheet-files will
+ be imported
+*/
+
+
+
+// inject:sass
+
+@import  '_variables.scss';
+
+@import  'base/_buttons.scss';
+
+@import  'base/_fonts.scss';
+
+@import  'base/_forms.scss';
+
+@import  'base/_icons.scss';
+
+@import  'base/_lists.scss';
+
+@import  'base/_page.scss';
+
+@import  'base/_tables.scss';
+
+@import  'base/_typography.scss';
+
+@import  'functions/_some-function.scss';
+
+@import  'mixins/_some-mixin.scss';
+
+@import  'placeholders/_some-placeholder.scss';
+
+@import  '../scripts/components/admin/admin-ui/_admin-ui-d.scss';
+
+@import  '../scripts/components/admin/medviz-sections/_medviz-sections-d.scss';
+
+@import  '../scripts/components/client/agenda/_agenda-d.scss';
+
+@import  '../scripts/components/client/map/_map-d.scss';
+
+@import  '../scripts/components/common/auth/_auth-d.scss';
+
+@import  '../scripts/components/common/profile/_profile-d.scss';
+
+@import  '../scripts/components/display/medviz-form/_medviz-form-d.scss';
+
+@import  '../scripts/components/display/medviz-nav/_medviz-nav-d.scss';
+
+@import  '../scripts/components/display/medviz-table/_medviz-table-d.scss';
+
+@import  '../scripts/components/layout/medviz-footer/_medviz-footer-d.scss';
+
+@import  '../scripts/components/layout/medviz-header/_medviz-header-d.scss';
+
+@import  '../scripts/components/spa/features/_features-d.scss';
+
+@import  '../scripts/components/spa/fold/_fold-d.scss';
+
+@import  '../scripts/components/spa/testimonials/_testimonials-d.scss';
+
+// endinject

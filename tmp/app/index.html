@@ -1,0 +1,79 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <title>Medviz</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="description"
+          content="">
+    <meta name="keywords"
+          content="">
+
+    <!-- build:css(.tmp,app) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css(.tmp,app) styles/main.css -->
+    <link rel="stylesheet"
+          href="styles/main.css"/>
+    <!-- endbuild -->
+</head>
+
+<body ng-app="medviz">
+
+<main ui-view></main>
+
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<!-- build:js({.tmp,app}) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!-- inject:js -->
+<script src="scripts/_app.js"></script>
+<script src="scripts/routes.js"></script>
+<script src="scripts/_main/global-services/api-f.js"></script>
+<script src="scripts/_main/global-services/data-f.js"></script>
+<script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
+<script src="scripts/components/admin/medviz-sections/medviz-sections-d.js"></script>
+<script src="scripts/components/client/agenda/agenda-d.js"></script>
+<script src="scripts/components/client/map/map-d.js"></script>
+<script src="scripts/components/common/auth/auth-d.js"></script>
+<script src="scripts/components/common/profile/profile-d.js"></script>
+<script src="scripts/components/display/medviz-form/medviz-form-d.js"></script>
+<script src="scripts/components/display/medviz-nav/medviz-nav-d.js"></script>
+<script src="scripts/components/display/medviz-table/medviz-table-d.js"></script>
+<script src="scripts/components/layout/medviz-footer/medviz-footer-d.js"></script>
+<script src="scripts/components/layout/medviz-header/medviz-header-d.js"></script>
+<script src="scripts/components/spa/features/features-d.js"></script>
+<script src="scripts/components/spa/fold/fold-d.js"></script>
+<script src="scripts/components/spa/testimonials/testimonials-d.js"></script>
+<!-- endinject -->
+<!-- endbuild -->
+</body>
+</html>
+
+
