@@ -11,11 +11,11 @@ angular.module('medviz')
 {
     return {
         templateUrl: 'scripts/components/common/profile/profile-d.html',
-        
-        restrict: 'EA',
-        scope: {
 
-        },
+        restrict: 'EA',
+        /*scope: {
+
+        },*/
         link: function (scope, el, attrs)
         {
 

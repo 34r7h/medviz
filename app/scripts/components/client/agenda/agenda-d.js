@@ -11,7 +11,7 @@ angular.module('medviz')
 {
     return {
         templateUrl: 'scripts/components/client/agenda/agenda-d.html',
-        
+
         restrict: 'EA',
         scope: {
 

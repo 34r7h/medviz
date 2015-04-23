@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" class="grid-frame">
 <head>
     <title>Medviz</title>
     <meta charset="utf-8">
@@ -8,23 +8,22 @@
     <meta http-equiv="X-UA-Compatible"
           content="IE=edge">
     <meta name="description"
-          content="">
+          content="Pharmaceutical Rep Management">
     <meta name="keywords"
-          content="">
+          content="drugs, reps, pharmaceutical">
 
     <!-- build:css(.tmp,app) styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-
     <!-- build:css(.tmp,app) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/foundation-apps/dist/css/foundation-apps.css"/>
     <link rel="stylesheet"
           href="styles/main.css"/>
     <!-- endbuild -->
 </head>
 
 <body ng-app="medviz">
-
 <main ui-view></main>
 
 
@@ -48,29 +47,36 @@
 <script src="bower_components/angular-aria/angular-aria.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/viewport-units-buggyfill/viewport-units-buggyfill.js"></script>
+<script src="bower_components/viewport-units-buggyfill/viewport-units-buggyfill.hacks.js"></script>
+<script src="bower_components/tether/tether.js"></script>
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="bower_components/hammerjs/hammer.js"></script>
+<script src="bower_components/foundation-apps/dist/js/foundation-apps.js"></script>
+<script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <!-- inject:js -->
+<script src="bower_components/foundation-apps/dist/js/foundation-apps-templates.js"></script>
 <script src="scripts/_app.js"></script>
 <script src="scripts/routes.js"></script>
 <script src="scripts/_main/global-services/api-f.js"></script>
 <script src="scripts/_main/global-services/data-f.js"></script>
-<script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
-<script src="scripts/components/admin/medviz-sections/medviz-sections-d.js"></script>
-<script src="scripts/components/common/auth/auth-d.js"></script>
 <script src="scripts/components/client/agenda/agenda-d.js"></script>
+<script src="scripts/components/common/auth/auth-d.js"></script>
 <script src="scripts/components/common/profile/profile-d.js"></script>
-<script src="scripts/components/client/map/map-d.js"></script>
-<script src="scripts/components/display/medviz-nav/medviz-nav-d.js"></script>
 <script src="scripts/components/display/medviz-form/medviz-form-d.js"></script>
+<script src="scripts/components/display/medviz-nav/medviz-nav-d.js"></script>
 <script src="scripts/components/display/medviz-table/medviz-table-d.js"></script>
 <script src="scripts/components/layout/medviz-footer/medviz-footer-d.js"></script>
 <script src="scripts/components/layout/medviz-header/medviz-header-d.js"></script>
 <script src="scripts/components/spa/features/features-d.js"></script>
 <script src="scripts/components/spa/fold/fold-d.js"></script>
 <script src="scripts/components/spa/testimonials/testimonials-d.js"></script>
+<script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
+<script src="scripts/components/admin/medviz-sections/medviz-sections-d.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
 </body>

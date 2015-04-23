@@ -10,5 +10,6 @@ angular.module('medviz', [
     'ngAnimate',
     'ngAria',
     'ngResource',
-    'ui.router'
+    'ui.router',
+    'foundation'
   ]);

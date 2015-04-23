@@ -1,3 +1,14 @@
 <div class="profile">
-profile
+    <div class="dark card">
+        <img src="http://placekitten.com/g/400/200">
+        <div class="card-divider">
+            {{visit.doctor}}
+        </div>
+        <div class="card-section">
+            <h4>Drugs</h4>
+            <p ng-repeat="drug in visit.drugs">
+                {{drug}}
+            </p>
+        </div>
+    </div>
 </div>

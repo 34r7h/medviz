@@ -29,10 +29,6 @@ angular.module('medviz')
                 url:'/agenda',
                 template:'<agenda></agenda>'
             })
-            .state('medviz.client.doctor', {
-                url:'/doctor-info',
-                template:'<profile></profile><map></map>'
-            })
             .state('medviz.client.visit', {
                 url:'/visit',
                 template:'<profile></profile><medviz-form></medviz-form>'

@@ -22,6 +22,13 @@ module.exports = function (config)
             'app/bower_components/angular-aria/angular-aria.js',
             'app/bower_components/angular-resource/angular-resource.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
+            'app/bower_components/viewport-units-buggyfill/viewport-units-buggyfill.js',
+            'app/bower_components/viewport-units-buggyfill/viewport-units-buggyfill.hacks.js',
+            'app/bower_components/tether/tether.js',
+            'app/bower_components/fastclick/lib/fastclick.js',
+            'app/bower_components/hammerjs/hammer.js',
+            'app/bower_components/foundation-apps/dist/js/foundation-apps.js',
+            'app/bower_components/ngmap/build/scripts/ng-map.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             // endbower
 

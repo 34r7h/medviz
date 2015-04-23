@@ -1,3 +1,20 @@
 <div class="auth">
-auth
+    <div class="dark card">
+        <img src="http://placekitten.com/g/400/200">
+        <div class="card-divider">
+            Please Log In
+        </div>
+        <div class="card-section"
+             ng-init="loginInputs = [
+                {name:'Email / User'},
+                {name:'Password'}
+            ]">
+            <label ng-repeat="inputs in loginInputs">
+                <span class="inline-label">
+                <span class="form-label">{{inputs.name}}</span>
+                <input type="text">
+                </span>
+            </label>
+        </div>
+    </div>
 </div>
