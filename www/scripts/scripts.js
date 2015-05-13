@@ -10,7 +10,9 @@ angular.module('medviz', [
     'ngAnimate',
     'ngAria',
     'ngResource',
-    'ui.router'
+    'ui.router',
+    'foundation',
+    'firebase'
   ]);
 
 /**
@@ -23,58 +25,94 @@ angular.module('medviz', [
  */
 
 angular.module('medviz')
-    .config(["$stateProvider", function ($stateProvider)
-    {
-        'use strict';
+	.config(["$stateProvider", function ($stateProvider) {
+		'use strict';
 
-        $stateProvider
-            .state('medviz', {
-                url:'',
-                template:'<medviz-header></medviz-header><ui-view></ui-view><medviz-footer/>'
-            })
-            .state('medviz.client', {
-                url:'/client',
-                template:'<ui-view></ui-view>'
-            })
-            .state('medviz.client.login', {
-                url:'/login',
-                template:'<auth></auth>'
-            })
-            .state('medviz.client.agenda', {
-                url:'/agenda',
-                template:'<agenda></agenda>'
-            })
-            .state('medviz.client.doctor', {
-                url:'/doctor-info',
-                template:'<profile></profile><map></map>'
-            })
-            .state('medviz.client.visit', {
-                url:'/visit',
-                template:'<profile></profile><medviz-form></medviz-form>'
-            })
-            .state('medviz.client.submit', {
-                url:'/submit',
-                template:'<medviz-table>'
-            })
-            .state('medviz.admin', {
-                url:'/admin',
-                template:'<ui-view></ui-view>'
-            })
-            .state('medviz.admin.login', {
-                url:'/login',
-                template:'<auth></auth>'
-            })
-            .state('medviz.admin.dashboard', {
-                url:'/dashboard',
-                template:'<profile></profile><medviz-sections></medviz-sections><medviz-form></medviz-form><medviz-table></medviz-table><admin-ui></admin-ui>'
-            })
-            .state('medviz.landing', {
-                url:'/landing',
-                template:'<fold></fold><features></features><testimonials></testimonials>'
-            })
-            /* STATES-NEEDLE - DO NOT REMOVE THIS */;
+		$stateProvider
+			.state('medviz', {
+				url: '',
+				template: '<medviz-header></medviz-header>' +
+				'<div ui-view="{{view.view}}" class="grid-container"></div>' +
+				'<medviz-footer></medviz-footer>',
+				controller: ["$scope", "$state", "Data", "Api", function($scope, $state, Data, Api){
+					$scope.view = {};
+					$scope.ctrlData = Data.test;
+					$scope.view.section='';
+					$scope.view.view=$state.params.view;
 
-    }]);
+
+				}]
+			})
+			.state('medviz.client', {
+				url: '/client/:view',
+				views: {
+					'':{
+						template:'<auth></auth>'
+					},
+					'doctors':{
+						template:'<agenda></agenda>'
+					},
+					'form': {
+						template:'<medviz-form></medviz-form>'
+					}
+				}
+			})
+			/*.state('medviz.auth.login', {
+				url: '/auth',
+				template: '<auth></auth>'
+			})
+			.state('medviz.client.agenda', {
+				url: '/agenda',
+				template: '<agenda></agenda>'
+			})
+			.state('medviz.client.visit', {
+				url: '/visit',
+				template: '<profile></profile><medviz-form></medviz-form>'
+			})
+			.state('medviz.client.submit', {
+				url: '/submit',
+				template: '<medviz-table>'
+			})*/
+			.state('medviz.admin', {
+				url: '/admin/:view',
+				//template: '<ui-view></ui-view>'
+				views:{
+					'':{
+						template:'<auth></auth>'
+					},
+					login:{
+						template:'<auth></auth>'
+					},
+					dashboard:{
+						template: '<medviz-sections></medviz-sections>'
+					}
+				}
+			})
+			/*.state('medviz.admin.dashboard', {
+				url: '/dashboard',
+				template: '<profile></profile><medviz-sections></medviz-sections><medviz-form></medviz-form><medviz-table></medviz-table><admin-ui></admin-ui>'
+			})*/
+			.state('medviz.landing', {
+				url: '/landing/:view',
+				//template: '<fold></fold><features></features><testimonials></testimonials>',
+				views:{
+					'':{
+						template:'<fold></fold><features></features><testimonials></testimonials>'
+					},
+					fold:{
+						template:'<fold></fold>'
+					},
+					features:{
+						template:'<features></features>'
+					},
+					testimonials:{
+						template:'<testimonials></testimonials>'
+					}
+				}
+			})
+			/* STATES-NEEDLE - DO NOT REMOVE THIS */;
+
+	}]);
 
 /**
  * @ngdoc service
@@ -84,23 +122,29 @@ angular.module('medviz')
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Api', function ()
+    .factory('Api', ["$rootScope", "$state", "Data", "Firebase", function ($rootScope, $state, Data, Firebase)
     {
         'use strict';
 
         // INITIALIZATION
+        var ref = new Firebase('https://medviz.firebaseio.com');
+        var data = Data;
 
+    // Function Definitions
+        function login(email, pass) {ref.authWithPassword({email:email,password:pass}, function(error, authData){if (error) {console.log(error);} else {$rootScope.authData = authData;}});}
+        function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
+        function authCheck(){return ref.getAuth();}
+        //function reloadState() {$state.go($state.current, {}, {reload: true});}
 
         // ACTUAL DEFINITION
         var service = {
-            someMethod: function ()
-            {
-
-            }
+            login: login,
+            logout: logout,
+            authCheck: authCheck
         };
 
         return service;
-    });
+    }]);
 /**
  * @ngdoc service
  * @name medviz.Data
@@ -109,22 +153,24 @@ angular.module('medviz')
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Data', function ()
+    .factory('Data', ["$firebaseObject", "$firebaseArray", "Firebase", function ($firebaseObject, $firebaseArray, Firebase)
     {
         'use strict';
 
         // INITIALIZATION
+        var ref = new Firebase('https://medviz.firebaseio.com');
+        var dataObject=$firebaseObject(ref);
+        var dataArray=$firebaseArray(ref);
 
 
         // ACTUAL DEFINITION
         var service = {
-            test: 'test this factory',
-            users:['alex','pat']
-
+            dataObject: dataObject,
+            dataArray: dataArray
         };
 
         return service;
-    });
+    }]);
 
 'use strict';
 
@@ -186,12 +232,41 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
+* @name medviz.directive:agenda
+* @description
+* # agenda
+*/
+angular.module('medviz')
+.directive('agenda', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
+
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+
+'use strict';
+
+/**
+* @ngdoc directive
 * @name medviz.directive:auth
 * @description
 * # auth
 */
 angular.module('medviz')
-.directive('auth', function ()
+.directive('auth', ["Api", "Data", function (Api, Data)
 {
     return {
         templateUrl: 'scripts/components/common/auth/auth-d.html',
@@ -202,42 +277,21 @@ angular.module('medviz')
         },
         link: function (scope, el, attrs)
         {
-
         },
-        controller: ["$scope", function ($scope)
+        controller: ["$scope", "$state", function ($scope, $state)
         {
+
+            $scope.login = Api.login;
+            $scope.logout = Api.logout;
+            $scope.authCheck = Api.authCheck();
+
+            $scope.dataArray = Data.dataArray;
+            $scope.dataObject = Data.dataObject;
+
 
         }]
     };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:agenda
-* @description
-* # agenda
-*/
-angular.module('medviz')
-.directive('agenda', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
+}]);
 'use strict';
 
 /**
@@ -251,11 +305,11 @@ angular.module('medviz')
 {
     return {
         templateUrl: 'scripts/components/common/profile/profile-d.html',
-        
-        restrict: 'EA',
-        scope: {
 
-        },
+        restrict: 'EA',
+        /*scope: {
+
+        },*/
         link: function (scope, el, attrs)
         {
 
@@ -266,19 +320,20 @@ angular.module('medviz')
         }]
     };
 });
+
 'use strict';
 
 /**
 * @ngdoc directive
-* @name medviz.directive:map
+* @name medviz.directive:medvizForm
 * @description
-* # map
+* # medvizForm
 */
 angular.module('medviz')
-.directive('map', function ()
+.directive('medvizForm', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/map/map-d.html',
+        templateUrl: 'scripts/components/display/medviz-form/medviz-form-d.html',
         
         restrict: 'EA',
         scope: {
@@ -309,37 +364,7 @@ angular.module('medviz')
         templateUrl: 'scripts/components/display/medviz-nav/medviz-nav-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizForm
-* @description
-* # medvizForm
-*/
-angular.module('medviz')
-.directive('medvizForm', function ()
-{
-    return {
-        templateUrl: 'scripts/components/display/medviz-form/medviz-form-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
         link: function (scope, el, attrs)
         {
 
@@ -420,14 +445,13 @@ angular.module('medviz')
     return {
         templateUrl: 'scripts/components/layout/medviz-header/medviz-header-d.html',
         restrict: 'EA',
-        scope: {},
         link: function (scope, el, attrs)
         {
             scope.data = Data;
         },
-        controller: ["$scope", function ($scope)
+        controller: ["$scope", "$state", function ($scope, $state)
         {
-            $scope.ctrlData = Data.test;
+
         }]
     };
 }]);

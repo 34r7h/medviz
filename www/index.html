@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" class="grid-frame">
 <head>
     <title>Medviz</title>
     <meta charset="utf-8">
@@ -8,19 +8,26 @@
     <meta http-equiv="X-UA-Compatible"
           content="IE=edge">
     <meta name="description"
-          content="">
+          content="Pharmaceutical Rep Management">
     <meta name="keywords"
-          content="">
+          content="drugs, reps, pharmaceutical">
 
     
-
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body ng-app="medviz">
-
-<main ui-view></main>
-
+<zf-offcanvas id="menu-left" position="left" class="dark">
+    <a zf-close="" class="close-button">×</a>
+    <medviz-nav></medviz-nav>
+</zf-offcanvas>
+<zf-offcanvas id="menu-right" position="right" class="primary">
+    <a zf-close="" class="close-button">×</a>
+    <auth></auth>
+</zf-offcanvas>
+<div class="grid-frame vertical">
+    <main ui-view></main>
+</div>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade

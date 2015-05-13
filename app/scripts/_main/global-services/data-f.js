@@ -6,12 +6,12 @@
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Data', function ($firebaseObject, $firebaseArray)
+    .factory('Data', function ($firebaseObject, $firebaseArray, Firebase)
     {
         'use strict';
 
         // INITIALIZATION
-        var ref = new Firebase("https://medviz.firebaseio.com");
+        var ref = new Firebase('https://medviz.firebaseio.com');
         var dataObject=$firebaseObject(ref);
         var dataArray=$firebaseArray(ref);
 
