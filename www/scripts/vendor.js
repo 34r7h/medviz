@@ -39575,7 +39575,6 @@ if (typeof define == TYPE_FUNCTION && define.amd) {
       extractedMedia = helpers.getStyle('.foundation-mq', 'font-family');
 
       mediaQueries = helpers.parseStyleToObject((extractedMedia));
-	    console.log(mediaQueries, "mediaqueries");
       if(mediaQueries.default === true){
         for(var key in mediaQueries) {
           mediaQueries[key] = 'only screen and (min-width: ' + mediaQueries[key].replace('rem', 'em') + ')';
