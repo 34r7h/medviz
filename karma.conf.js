@@ -29,6 +29,8 @@ module.exports = function (config)
             'app/bower_components/hammerjs/hammer.js',
             'app/bower_components/foundation-apps/dist/js/foundation-apps.js',
             'app/bower_components/ngmap/build/scripts/ng-map.js',
+            'app/bower_components/firebase/firebase.js',
+            'app/bower_components/angularfire/dist/angularfire.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             // endbower
 

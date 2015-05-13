@@ -12,14 +12,13 @@ angular.module('medviz')
     return {
         templateUrl: 'scripts/components/layout/medviz-header/medviz-header-d.html',
         restrict: 'EA',
-        scope: {},
         link: function (scope, el, attrs)
         {
             scope.data = Data;
         },
-        controller: function ($scope)
+        controller: function ($scope, $state)
         {
-            $scope.ctrlData = Data.test;
+
         }
     };
 });

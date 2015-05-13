@@ -11,5 +11,6 @@ angular.module('medviz', [
     'ngAria',
     'ngResource',
     'ui.router',
-    'foundation'
+    'foundation',
+    'firebase'
   ]);

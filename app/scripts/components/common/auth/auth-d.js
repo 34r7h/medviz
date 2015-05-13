@@ -7,7 +7,7 @@
 * # auth
 */
 angular.module('medviz')
-.directive('auth', function ()
+.directive('auth', function (Api, Data)
 {
     return {
         templateUrl: 'scripts/components/common/auth/auth-d.html',
@@ -18,10 +18,17 @@ angular.module('medviz')
         },
         link: function (scope, el, attrs)
         {
-
         },
-        controller: function ($scope)
+        controller: function ($scope, $state)
         {
+
+            $scope.login = Api.login;
+            $scope.logout = Api.logout;
+            $scope.authCheck = Api.authCheck();
+
+            $scope.dataArray = Data.dataArray;
+            $scope.dataObject = Data.dataObject;
+
 
         }
     };

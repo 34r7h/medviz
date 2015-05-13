@@ -13,9 +13,7 @@ angular.module('medviz')
         templateUrl: 'scripts/components/display/medviz-nav/medviz-nav-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
         link: function (scope, el, attrs)
         {
 

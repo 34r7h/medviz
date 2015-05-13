@@ -24,8 +24,17 @@
 </head>
 
 <body ng-app="medviz">
-<main ui-view></main>
-
+<zf-offcanvas id="menu-left" position="left" class="dark">
+    <a zf-close="" class="close-button">×</a>
+    <medviz-nav></medviz-nav>
+</zf-offcanvas>
+<zf-offcanvas id="menu-right" position="right" class="primary">
+    <a zf-close="" class="close-button">×</a>
+    <auth></auth>
+</zf-offcanvas>
+<div class="grid-frame vertical">
+    <main ui-view></main>
+</div>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
@@ -55,6 +64,8 @@
 <script src="bower_components/foundation-apps/dist/js/foundation-apps.js"></script>
 <script src="bower_components/foundation-apps/dist/js/foundation-apps-templates.js"></script>
 <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -64,18 +75,18 @@
 <script src="scripts/routes.js"></script>
 <script src="scripts/_main/global-services/api-f.js"></script>
 <script src="scripts/_main/global-services/data-f.js"></script>
-<script src="scripts/components/client/agenda/agenda-d.js"></script>
 <script src="scripts/components/common/auth/auth-d.js"></script>
 <script src="scripts/components/common/profile/profile-d.js"></script>
+<script src="scripts/components/client/agenda/agenda-d.js"></script>
+<script src="scripts/components/layout/medviz-footer/medviz-footer-d.js"></script>
+<script src="scripts/components/layout/medviz-header/medviz-header-d.js"></script>
 <script src="scripts/components/display/medviz-form/medviz-form-d.js"></script>
 <script src="scripts/components/display/medviz-nav/medviz-nav-d.js"></script>
 <script src="scripts/components/display/medviz-table/medviz-table-d.js"></script>
-<script src="scripts/components/layout/medviz-footer/medviz-footer-d.js"></script>
-<script src="scripts/components/layout/medviz-header/medviz-header-d.js"></script>
 <script src="scripts/components/spa/features/features-d.js"></script>
+<script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
 <script src="scripts/components/spa/fold/fold-d.js"></script>
 <script src="scripts/components/spa/testimonials/testimonials-d.js"></script>
-<script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
 <script src="scripts/components/admin/medviz-sections/medviz-sections-d.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
