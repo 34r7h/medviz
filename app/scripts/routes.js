@@ -8,16 +8,17 @@
  */
 
 angular.module('medviz')
-	.config(function ($stateProvider) {
+	.config(function ($stateProvider, $urlRouterProvider) {
 		'use strict';
 
 		$stateProvider
 			.state('medviz', {
 				url: '',
+				abstract: true,
 				template: '<medviz-header></medviz-header>' +
-				'<div ui-view="{{view.view}}" class="grid-container"></div>' +
+				'<div ui-view="{{view.view}}" ></div>' +
 				'<medviz-footer></medviz-footer>',
-				controller: function($scope, $state, Data, Api){
+				controller: function($scope, $state, Data){
 					$scope.view = {};
 					$scope.ctrlData = Data.test;
 					$scope.view.section='';
@@ -25,6 +26,11 @@ angular.module('medviz')
 
 
 				}
+			})
+			.state('medviz.welcome', {
+				url: '/',
+				template: '<fold></fold><features></features><testimonials></testimonials>',
+				controller: function($scope){}
 			})
 			.state('medviz.client', {
 				url: '/client/:view',
@@ -94,5 +100,5 @@ angular.module('medviz')
 				}
 			})
 			/* STATES-NEEDLE - DO NOT REMOVE THIS */;
-
+		$urlRouterProvider.otherwise('/');
 	});

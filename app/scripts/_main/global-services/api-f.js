@@ -15,7 +15,7 @@ angular.module('medviz')
         var data = Data;
 
     // Function Definitions
-        function login(email, pass) {ref.authWithPassword({email:email,password:pass}, function(error, authData){if (error) {console.log(error);} else {$rootScope.authData = authData;}});}
+        function login(email, pass) {ref.authWithPassword({email:email,password:pass}, function(error, authData){if (error) {console.log(error);} else {$rootScope.authData = authData; $state.reload()}});}
         function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
         function authCheck(){return ref.getAuth();}
         //function reloadState() {$state.go($state.current, {}, {reload: true});}

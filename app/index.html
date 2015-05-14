@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" class="grid-frame">
+<html class="no-js grid-frame" >
 <head>
     <title>Medviz</title>
     <meta charset="utf-8">
@@ -22,8 +22,7 @@
           href="styles/main.css"/>
     <!-- endbuild -->
 </head>
-
-<body ng-app="medviz">
+<body ng-app="medviz" class="">
 <zf-offcanvas id="menu-left" position="left" class="dark">
     <a zf-close="" class="close-button">×</a>
     <medviz-nav></medviz-nav>
@@ -32,9 +31,7 @@
     <a zf-close="" class="close-button">×</a>
     <auth></auth>
 </zf-offcanvas>
-<div class="grid-frame vertical">
-    <main ui-view></main>
-</div>
+<div ui-view></div>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
@@ -77,9 +74,10 @@
 <script src="scripts/_main/global-services/data-f.js"></script>
 <script src="scripts/components/admin/admin-ui/admin-ui-d.js"></script>
 <script src="scripts/components/admin/medviz-sections/medviz-sections-d.js"></script>
+<script src="scripts/components/client/agenda/agenda-d.js"></script>
 <script src="scripts/components/common/auth/auth-d.js"></script>
 <script src="scripts/components/common/profile/profile-d.js"></script>
-<script src="scripts/components/client/agenda/agenda-d.js"></script>
+<script src="scripts/components/common/reg/reg-d.js"></script>
 <script src="scripts/components/display/medviz-form/medviz-form-d.js"></script>
 <script src="scripts/components/display/medviz-nav/medviz-nav-d.js"></script>
 <script src="scripts/components/display/medviz-table/medviz-table-d.js"></script>

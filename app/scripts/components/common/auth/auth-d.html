@@ -1,4 +1,4 @@
-<div class="dark card auth">
+<div class="primary card auth">
     <div class="card-divider" ng-show="authCheck.uid">
         <button class="secondary button" ng-click="logout();authCheck=false">Logout</button>
     </div>
@@ -6,12 +6,10 @@
         {{dataObject}}
     </div>
     <div class="card-divider" ng-hide="authCheck.uid">
-        <p>Please Log In</p>
+        <h2 class="subheader">Sign In</h2>
     </div>
     <div class="card-section" ng-hide="authCheck.uid">
-        <div ng-hide="authCheck.uid"><img src="images/MEDVIZ-logo.png">
-            <div class="card-divider">
-            </div>
+        <form id="signin">
             <div class="card-section"
                  ng-init="
                 email='';
@@ -26,8 +24,8 @@
                 <input ng-model="$parent[inputs.name]" type="{{inputs.type}}">
                 </span>
                 </label>
-                <button class="button hollow" ng-click="login(email,password);">Sign in</button>
             </div>
-        </div>
+        </form>
+        <button form="signin" type="submit" class="button" value="Submit" ng-click="login(email,password);">Sign in</button>
     </div>
 </div>
