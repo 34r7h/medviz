@@ -25,16 +25,17 @@ angular.module('medviz', [
  */
 
 angular.module('medviz')
-	.config(["$stateProvider", function ($stateProvider) {
+	.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
 		'use strict';
 
 		$stateProvider
 			.state('medviz', {
 				url: '',
+				abstract: true,
 				template: '<medviz-header></medviz-header>' +
-				'<div ui-view="{{view.view}}" class="grid-container"></div>' +
+				'<div ui-view="{{view.view}}" ></div>' +
 				'<medviz-footer></medviz-footer>',
-				controller: ["$scope", "$state", "Data", "Api", function($scope, $state, Data, Api){
+				controller: ["$scope", "$state", "Data", function($scope, $state, Data){
 					$scope.view = {};
 					$scope.ctrlData = Data.test;
 					$scope.view.section='';
@@ -42,6 +43,11 @@ angular.module('medviz')
 
 
 				}]
+			})
+			.state('medviz.welcome', {
+				url: '/',
+				template: '<fold></fold><features></features><testimonials></testimonials>',
+				controller: ["$scope", function($scope){}]
 			})
 			.state('medviz.client', {
 				url: '/client/:view',
@@ -111,7 +117,7 @@ angular.module('medviz')
 				}
 			})
 			/* STATES-NEEDLE - DO NOT REMOVE THIS */;
-
+		$urlRouterProvider.otherwise('/');
 	}]);
 
 /**
@@ -131,7 +137,7 @@ angular.module('medviz')
         var data = Data;
 
     // Function Definitions
-        function login(email, pass) {ref.authWithPassword({email:email,password:pass}, function(error, authData){if (error) {console.log(error);} else {$rootScope.authData = authData;}});}
+        function login(email, pass) {ref.authWithPassword({email:email,password:pass}, function(error, authData){if (error) {console.log(error);} else {$rootScope.authData = authData; $state.reload()}});}
         function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
         function authCheck(){return ref.getAuth();}
         //function reloadState() {$state.go($state.current, {}, {reload: true});}
@@ -172,6 +178,144 @@ angular.module('medviz')
         return service;
     }]);
 
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizForm
+* @description
+* # medvizForm
+*/
+angular.module('medviz')
+.directive('medvizForm', function ()
+{
+    return {
+        templateUrl: 'scripts/components/display/medviz-form/medviz-form-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizTable
+* @description
+* # medvizTable
+*/
+angular.module('medviz')
+.directive('medvizTable', function ()
+{
+    return {
+        templateUrl: 'scripts/components/display/medviz-table/medviz-table-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizSections
+* @description
+* # medvizSections
+*/
+angular.module('medviz')
+.directive('medvizSections', function ()
+{
+    return {
+        templateUrl: 'scripts/components/admin/medviz-sections/medviz-sections-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:adminUi
+* @description
+* # adminUi
+*/
+angular.module('medviz')
+.directive('adminUi', function ()
+{
+    return {
+        templateUrl: 'scripts/components/admin/admin-ui/admin-ui-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizNav
+* @description
+* # medvizNav
+*/
+angular.module('medviz')
+.directive('medvizNav', function ()
+{
+    return {
+        templateUrl: 'scripts/components/display/medviz-nav/medviz-nav-d.html',
+        
+        restrict: 'EA',
+
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
 'use strict';
 
 /**
@@ -240,34 +384,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizForm
-* @description
-* # medvizForm
-*/
-angular.module('medviz')
-.directive('medvizForm', function ()
-{
-    return {
-        templateUrl: 'scripts/components/display/medviz-form/medviz-form-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:agenda
 * @description
 * # agenda
@@ -297,169 +413,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizTable
-* @description
-* # medvizTable
-*/
-angular.module('medviz')
-.directive('medvizTable', function ()
-{
-    return {
-        templateUrl: 'scripts/components/display/medviz-table/medviz-table-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:adminUi
-* @description
-* # adminUi
-*/
-angular.module('medviz')
-.directive('adminUi', function ()
-{
-    return {
-        templateUrl: 'scripts/components/admin/admin-ui/admin-ui-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizSections
-* @description
-* # medvizSections
-*/
-angular.module('medviz')
-.directive('medvizSections', function ()
-{
-    return {
-        templateUrl: 'scripts/components/admin/medviz-sections/medviz-sections-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizNav
-* @description
-* # medvizNav
-*/
-angular.module('medviz')
-.directive('medvizNav', function ()
-{
-    return {
-        templateUrl: 'scripts/components/display/medviz-nav/medviz-nav-d.html',
-        
-        restrict: 'EA',
-
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizFooter
-* @description
-* # medvizFooter
-*/
-angular.module('medviz')
-.directive('medvizFooter', function ()
-{
-    return {
-        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizHeader
-* @description
-* # medvizHeader
-*/
-angular.module('medviz')
-.directive('medvizHeader', ["Data", function (Data)
-{
-    return {
-        templateUrl: 'scripts/components/layout/medviz-header/medviz-header-d.html',
-        restrict: 'EA',
-        link: function (scope, el, attrs)
-        {
-            scope.data = Data;
-        },
-        controller: ["$scope", "$state", function ($scope, $state)
-        {
-
-        }]
-    };
-}]);
-
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:features
 * @description
 * # features
@@ -469,6 +422,34 @@ angular.module('medviz')
 {
     return {
         templateUrl: 'scripts/components/spa/features/features-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:reg
+* @description
+* # reg
+*/
+angular.module('medviz')
+.directive('reg', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/reg/reg-d.html',
         
         restrict: 'EA',
         scope: {
@@ -540,3 +521,55 @@ angular.module('medviz')
         }]
     };
 });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizFooter
+* @description
+* # medvizFooter
+*/
+angular.module('medviz')
+.directive('medvizFooter', function ()
+{
+    return {
+        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizHeader
+* @description
+* # medvizHeader
+*/
+angular.module('medviz')
+.directive('medvizHeader', ["Data", function (Data)
+{
+    return {
+        templateUrl: 'scripts/components/layout/medviz-header/medviz-header-d.html',
+        restrict: 'EA',
+        link: function (scope, el, attrs)
+        {
+            scope.data = Data;
+        },
+        controller: ["$scope", "$state", function ($scope, $state)
+        {
+
+        }]
+    };
+}]);
