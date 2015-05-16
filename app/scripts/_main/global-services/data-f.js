@@ -12,12 +12,13 @@ angular.module('medviz')
 
         // INITIALIZATION
         var ref = new Firebase('https://medviz.firebaseio.com');
-        var dataObject=$firebaseObject(ref);
+        var dataObject= $firebaseObject(ref);
         var dataArray=$firebaseArray(ref);
 
 
         // ACTUAL DEFINITION
         var service = {
+            ref: ref,
             dataObject: dataObject,
             dataArray: dataArray
         };

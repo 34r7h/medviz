@@ -6,16 +6,16 @@
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Api', function ($state, Auth)
+    .factory('Api', function (Auth, Admin, Client)
     {
         'use strict';
 
         // INITIALIZATION
 
     // Function Definitions
+	    console.log('API Factory Injected With: ',arguments);
 
-
-        //function reloadState() {$state.go($state.current, {}, {reload: true});}
+	    //function reloadState() {$state.go($state.current, {}, {reload: true});}
 
         // ACTUAL DEFINITION
         var service = {

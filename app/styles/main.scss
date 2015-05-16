@@ -11,10 +11,6 @@ IMPORTANT NOTE:
 
 @import  '_variables.scss';
 
-@import  'functions/_some-function.scss';
-
-@import  'mixins/_some-mixin.scss';
-
 @import  'base/_buttons.scss';
 
 @import  'base/_fonts.scss';
@@ -30,6 +26,10 @@ IMPORTANT NOTE:
 @import  'base/_tables.scss';
 
 @import  'base/_typography.scss';
+
+@import  'functions/_some-function.scss';
+
+@import  'mixins/_some-mixin.scss';
 
 @import  'placeholders/_some-placeholder.scss';
 
@@ -55,8 +55,6 @@ IMPORTANT NOTE:
 
 @import  '../scripts/components/common/auth/_auth-d.scss';
 
-@import  '../scripts/components/common/profile/_profile-d.scss';
-
 @import  '../scripts/components/landing/features/_features-d.scss';
 
 @import  '../scripts/components/landing/fold/_fold-d.scss';
@@ -68,6 +66,8 @@ IMPORTANT NOTE:
 @import  '../scripts/components/layout/medviz-header/_medviz-header-d.scss';
 
 @import  '../scripts/components/layout/medviz-nav/_medviz-nav-d.scss';
+
+@import  '../scripts/components/common/auth/profile/_profile-d.scss';
 
 @import  '../scripts/components/common/auth/reg/_reg-d.scss';
 

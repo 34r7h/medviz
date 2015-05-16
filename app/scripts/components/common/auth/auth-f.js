@@ -21,7 +21,7 @@ angular.module('medviz')
                 password : password
             }, function(error, userData) {
                 if (error) {
-                    console.log("Error creating user:", error);
+                    console.log('Error creating user:', error);
                 } else {
                     console.log("Successfully created user account with uid:", userData.uid);
 

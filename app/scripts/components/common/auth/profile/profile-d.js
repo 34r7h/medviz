@@ -10,7 +10,7 @@ angular.module('medviz')
 .directive('profile', function ()
 {
     return {
-        templateUrl: 'scripts/components/common/profile/profile-d.html',
+        templateUrl: 'scripts/components/common/auth/profile/profile-d.html',
 
         restrict: 'EA',
         /*scope: {
