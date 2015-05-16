@@ -13,6 +13,8 @@ IMPORTANT NOTE:
 
 @import  'functions/_some-function.scss';
 
+@import  'mixins/_some-mixin.scss';
+
 @import  'base/_buttons.scss';
 
 @import  'base/_fonts.scss';
@@ -29,8 +31,6 @@ IMPORTANT NOTE:
 
 @import  'base/_typography.scss';
 
-@import  'mixins/_some-mixin.scss';
-
 @import  'placeholders/_some-placeholder.scss';
 
 @import  '../scripts/components/admin/_admin-d.scss';
@@ -40,6 +40,8 @@ IMPORTANT NOTE:
 @import  '../scripts/components/landing/_landing-d.scss';
 
 @import  '../scripts/components/admin/labs/_labs-d.scss';
+
+@import  '../scripts/components/admin/medical/_medical-d.scss';
 
 @import  '../scripts/components/admin/reps/_reps-d.scss';
 
@@ -70,7 +72,5 @@ IMPORTANT NOTE:
 @import  '../scripts/components/common/auth/reg/_reg-d.scss';
 
 @import  '../scripts/components/common/auth/sign-in/_sign-in-d.scss';
-
-@import  '../scripts/components/admin/reps/_reps-d.scss';
 
 // endinject
