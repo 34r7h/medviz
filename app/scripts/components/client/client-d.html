@@ -1,16 +1,11 @@
-<div class="client">
-    <div zf-action-sheet="">
-        <div zf-as-button="" title="I'm an Action Sheet"></div>
-        <div zf-as-content="" position="bottom">
-            <p>What would you like to do?</p>
-            <ul ng-init="$parent.client.show='doctors'">
-                <li><a href="#" ng-click="$parent.client.show='doctors'">Browse Doctors</a></li>
-                <li><a href="#" ng-click="$parent.client.show='agenda'">View Agenda</a></li>
-                <li><a href="#" ng-click="$parent.client.show='visit'">Begin Visit</a></li>
-            </ul>
-        </div>
-    </div>
-<div>    <doctors></doctors>
-</div>    <agenda ng-show="client.show==='agenda'"></agenda>
+<div class="client" ng-init="client.show='doctors'">
+    <ul class="menu-bar primary">
+        <li><a ng-click="client.show='doctors'">Browse Doctors</a></li>
+        <li><a ng-click="client.show='agenda'">View Agenda</a></li>
+        <li><a ng-click="client.show='visit'">Begin Visit</a></li>
+    </ul>
+
+    <doctors ng-show="client.show==='doctors'"></doctors>
+    <agenda ng-show="client.show==='agenda'"></agenda>
     <visit ng-show="client.show==='visit'"></visit>
 </div>

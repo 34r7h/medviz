@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:fold
+* @name medviz.directive:landing
 * @description
-* # fold
+* # landing
 */
 angular.module('medviz')
-.directive('fold', function ()
+.directive('landing', function ()
 {
     return {
-        templateUrl: 'scripts/components/spa/fold/fold-d.html',
+        templateUrl: 'scripts/components/landing/landing-d.html',
         
         restrict: 'EA',
         scope: {
@@ -20,7 +20,7 @@ angular.module('medviz')
         {
 
         },
-        controller: function ($scope)
+        controller: function ($scope, Landing)
         {
 
         }

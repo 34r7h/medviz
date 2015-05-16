@@ -1,4 +1,4 @@
-<div class="sign-in">
+<div class="sign-in card">
     <div class="card-divider" ng-show="authCheck.uid">
         <button class="secondary button" ng-click="logout();authCheck=false">Logout</button>
     </div>
@@ -24,8 +24,9 @@
                     <input ng-model="$parent[inputs.name]" type="{{inputs.type}}">
                     </span>
                 </label>
+                <button form="signin" type="submit" class="button" value="Submit" ng-click="login(email,password);">Sign in</button>
             </div>
         </form>
-        <button form="signin" type="submit" class="button" value="Submit" ng-click="login(email,password);">Sign in</button>
+
     </div>
 </div>

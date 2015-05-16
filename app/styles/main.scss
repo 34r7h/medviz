@@ -11,6 +11,8 @@ IMPORTANT NOTE:
 
 @import  '_variables.scss';
 
+@import  'functions/_some-function.scss';
+
 @import  'base/_buttons.scss';
 
 @import  'base/_fonts.scss';
@@ -27,15 +29,21 @@ IMPORTANT NOTE:
 
 @import  'base/_typography.scss';
 
-@import  'functions/_some-function.scss';
-
 @import  'mixins/_some-mixin.scss';
 
 @import  'placeholders/_some-placeholder.scss';
 
-@import  '../scripts/components/admin2/admin-ui/_admin-ui-d.scss';
+@import  '../scripts/components/admin/_admin-d.scss';
 
-@import  '../scripts/components/admin2/medviz-sections/_medviz-sections-d.scss';
+@import  '../scripts/components/client/_client-d.scss';
+
+@import  '../scripts/components/landing/_landing-d.scss';
+
+@import  '../scripts/components/admin/labs/_labs-d.scss';
+
+@import  '../scripts/components/admin/reps/_reps-d.scss';
+
+@import  '../scripts/components/admin/visits/_visits-d.scss';
 
 @import  '../scripts/components/client/agenda/_agenda-d.scss';
 
@@ -47,30 +55,22 @@ IMPORTANT NOTE:
 
 @import  '../scripts/components/common/profile/_profile-d.scss';
 
+@import  '../scripts/components/landing/features/_features-d.scss';
+
+@import  '../scripts/components/landing/fold/_fold-d.scss';
+
+@import  '../scripts/components/landing/testimonials/_testimonials-d.scss';
+
 @import  '../scripts/components/layout/medviz-footer/_medviz-footer-d.scss';
 
 @import  '../scripts/components/layout/medviz-header/_medviz-header-d.scss';
 
-@import  '../scripts/components/display/medviz-form/_medviz-form-d.scss';
-
-@import '../scripts/components/layout/medviz-nav/_medviz-nav-d.scss';
-
-@import  '../scripts/components/display/medviz-table/_medviz-table-d.scss';
-
-@import  '../scripts/components/spa/features/_features-d.scss';
-
-@import  '../scripts/components/spa/fold/_fold-d.scss';
-
-@import  '../scripts/components/spa/testimonials/_testimonials-d.scss';
+@import  '../scripts/components/layout/medviz-nav/_medviz-nav-d.scss';
 
 @import  '../scripts/components/common/auth/reg/_reg-d.scss';
 
 @import  '../scripts/components/common/auth/sign-in/_sign-in-d.scss';
 
-@import  '../scripts/landing/_landing-d.scss';
-
-@import '../scripts/components/admin/_admin-d.scss';
-
-@import  '../scripts/components/client/_client-d.scss';
+@import  '../scripts/components/admin/reps/_reps-d.scss';
 
 // endinject

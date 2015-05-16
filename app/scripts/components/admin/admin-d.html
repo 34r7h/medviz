@@ -1,3 +1,13 @@
-<div class="admin">
+<div class="admin" ng-init="admin.show='visits'">
+    <ul class="menu-bar primary">
+        <li><a ng-click="admin.show='reps'">Edit Reps</a></li>
+        <li><a ng-click="admin.show='labs'">Edit Labs</a></li>
+        <li><a ng-click="admin.show='visits'">Edit Visits</a></li>
+        <li><a ng-click="admin.show='medical'">Edit Medical</a></li>
+    </ul>
 
+    <reps ng-show="admin.show==='reps'"></reps>
+    <labs ng-show="admin.show==='labs'"></labs>
+    <visits ng-show="admin.show==='visits'"></visits>
+    <medical ng-show="admin.show==='medical'"></medical>
 </div>

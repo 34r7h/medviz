@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizForm
+* @name medviz.directive:testimonials
 * @description
-* # medvizForm
+* # testimonials
 */
 angular.module('medviz')
-.directive('medvizForm', function ()
+.directive('testimonials', function ()
 {
     return {
-        templateUrl: 'scripts/components/display/medviz-form/medviz-form-d.html',
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
         
         restrict: 'EA',
         scope: {

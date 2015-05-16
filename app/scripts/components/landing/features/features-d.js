@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:landing
+* @name medviz.directive:features
 * @description
-* # landing
+* # features
 */
 angular.module('medviz')
-.directive('landing', function ()
+.directive('features', function ()
 {
     return {
-        templateUrl: 'scripts/landing/landing-d.html',
+        templateUrl: 'scripts/components/landing/features/features-d.html',
         
         restrict: 'EA',
         scope: {
@@ -20,7 +20,7 @@ angular.module('medviz')
         {
 
         },
-        controller: function ($scope, Landing)
+        controller: function ($scope)
         {
 
         }

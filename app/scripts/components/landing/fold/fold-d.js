@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:testimonials
+* @name medviz.directive:fold
 * @description
-* # testimonials
+* # fold
 */
 angular.module('medviz')
-.directive('testimonials', function ()
+.directive('fold', function ()
 {
     return {
-        templateUrl: 'scripts/components/spa/testimonials/testimonials-d.html',
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
         
         restrict: 'EA',
         scope: {
