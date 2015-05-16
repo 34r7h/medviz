@@ -72,16 +72,16 @@ angular.module('medviz')
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Api', ["$state", "Auth", function ($state, Auth)
+    .factory('Api', ["Auth", "Admin", "Client", function (Auth, Admin, Client)
     {
         'use strict';
 
         // INITIALIZATION
 
     // Function Definitions
+	    console.log('API Factory Injected With: ',arguments);
 
-
-        //function reloadState() {$state.go($state.current, {}, {reload: true});}
+	    //function reloadState() {$state.go($state.current, {}, {reload: true});}
 
         // ACTUAL DEFINITION
         var service = {
@@ -107,12 +107,13 @@ angular.module('medviz')
 
         // INITIALIZATION
         var ref = new Firebase('https://medviz.firebaseio.com');
-        var dataObject=$firebaseObject(ref);
+        var dataObject= $firebaseObject(ref);
         var dataArray=$firebaseArray(ref);
 
 
         // ACTUAL DEFINITION
         var service = {
+            ref: ref,
             dataObject: dataObject,
             dataArray: dataArray
         };
@@ -153,15 +154,53 @@ angular.module('medviz')
  * @name medviz.Admin
  * @description
  * # Admin
- * Service in the medviz.
+ * Factory in the medviz.
  */
 angular.module('medviz')
-    .service('Admin', function ()
+    .factory('Admin', ["Firebase", "Data", "$firebaseObject", "$firebaseArray", function (Firebase, Data, $firebaseObject, $firebaseArray)
     {
         'use strict';
 
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
+        // INITIALIZATION
+        var dataRef = Data.ref;
+        var dataArray = $firebaseArray(dataRef);
+        console.log('Admin Factory Injected With: ',arguments);
+
+        function create(type, props){
+            var createRef = dataRef.child(type);
+            var createArray = $firebaseArray(createRef);
+            createArray.$add(props);
+            // TODO add to index
+        }
+        // ('users', {name:'name', role:'admin'});
+
+        function update(type, id, ob){
+            var updateRef = dataRef.child(type);
+            updateRef = updateRef.child(id);
+            var updateObject = $firebaseObject(updateRef);
+            updateObject.$value = ob;
+            updateObject.$save();
+            // TODO update index
+        }
+        //('users','-JpOhiJ7c6BDktXbqre0', {email:'email', name:'name'});
+
+        function remove(type, id){
+            var removeRef = dataRef.child(type);
+            removeRef = removeRef.child(id);
+            var removeObject = $firebaseObject(removeRef);
+            removeObject.$remove();
+        }
+        //('users','-JpQE_p5eEk8fKXUuCFU');
+
+        // ACTUAL DEFINITION
+        var service = {
+            create: create,
+            update: update,
+            remove: remove
+        };
+
+        return service;
+    }]);
 'use strict';
 
 /**
@@ -195,14 +234,25 @@ angular.module('medviz')
  * @name medviz.Client
  * @description
  * # Client
- * Service in the medviz.
+ * Factory in the medviz.
  */
 angular.module('medviz')
-    .service('Client', function ()
+    .factory('Client', function ()
     {
         'use strict';
 
-        // AngularJS will instantiate a singleton by calling "new" on this function
+        // INITIALIZATION
+
+
+        // ACTUAL DEFINITION
+        var service = {
+            someMethod: function ()
+            {
+
+            }
+        };
+
+        return service;
     });
 'use strict';
 
@@ -246,34 +296,6 @@ angular.module('medviz')
 
         // AngularJS will instantiate a singleton by calling "new" on this function
     });
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:labs
-* @description
-* # labs
-*/
-angular.module('medviz')
-.directive('labs', function ()
-{
-    return {
-        templateUrl: 'scripts/components/admin/labs/labs-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
@@ -334,15 +356,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:reps
+* @name medviz.directive:labs
 * @description
-* # reps
+* # labs
 */
 angular.module('medviz')
-.directive('reps', function ()
+.directive('labs', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/reps/reps-d.html',
+        templateUrl: 'scripts/components/admin/labs/labs-d.html',
         
         restrict: 'EA',
         scope: {
@@ -358,6 +380,35 @@ angular.module('medviz')
         }]
     };
 });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:agenda
+* @description
+* # agenda
+*/
+angular.module('medviz')
+.directive('agenda', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
+
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+
 'use strict';
 
 /**
@@ -412,7 +463,7 @@ angular.module('medviz')
                 password : password
             }, function(error, userData) {
                 if (error) {
-                    console.log("Error creating user:", error);
+                    console.log('Error creating user:', error);
                 } else {
                     console.log("Successfully created user account with uid:", userData.uid);
 
@@ -479,63 +530,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:visit
-* @description
-* # visit
-*/
-angular.module('medviz')
-.directive('visit', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/visit/visit-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:profile
-* @description
-* # profile
-*/
-angular.module('medviz')
-.directive('profile', function ()
-{
-    return {
-        templateUrl: 'scripts/components/common/profile/profile-d.html',
-
-        restrict: 'EA',
-        /*scope: {
-
-        },*/
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:features
 * @description
 * # features
@@ -564,44 +558,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:agenda
+* @name medviz.directive:reps
 * @description
-* # agenda
+* # reps
 */
 angular.module('medviz')
-.directive('agenda', function ()
+.directive('reps', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
-
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:doctors
-* @description
-* # doctors
-*/
-angular.module('medviz')
-.directive('doctors', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
+        templateUrl: 'scripts/components/admin/reps/reps-d.html',
         
         restrict: 'EA',
         scope: {
@@ -649,15 +614,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:fold
+* @name medviz.directive:medvizFooter
 * @description
-* # fold
+* # medvizFooter
 */
 angular.module('medviz')
-.directive('fold', function ()
+.directive('medvizFooter', function ()
 {
     return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
         
         restrict: 'EA',
         scope: {
@@ -702,34 +667,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizFooter
-* @description
-* # medvizFooter
-*/
-angular.module('medviz')
-.directive('medvizFooter', function ()
-{
-    return {
-        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:medvizNav
 * @description
 * # medvizNav
@@ -752,6 +689,119 @@ angular.module('medviz')
         }]
     };
 });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:doctors
+* @description
+* # doctors
+*/
+angular.module('medviz')
+.directive('doctors', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:visit
+* @description
+* # visit
+*/
+angular.module('medviz')
+.directive('visit', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/visit/visit-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:fold
+* @description
+* # fold
+*/
+angular.module('medviz')
+.directive('fold', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:profile
+* @description
+* # profile
+*/
+angular.module('medviz')
+.directive('profile', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/auth/profile/profile-d.html',
+
+        restrict: 'EA',
+        /*scope: {
+
+        },*/
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+
 'use strict';
 
 /**
