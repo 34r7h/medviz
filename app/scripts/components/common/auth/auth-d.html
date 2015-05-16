@@ -1,31 +1,16 @@
-<div class="primary card auth">
-    <div class="card-divider" ng-show="authCheck.uid">
-        <button class="secondary button" ng-click="logout();authCheck=false">Logout</button>
+<div class="auth" ng-init="auth.show = 'signIn'">
+    <p class="grid-content">Please
+        <a href ng-click="auth.show = 'signIn'" ng-show="auth.show !== 'signIn'"> sign-in </a>
+        <b ng-show="auth.show === 'signIn'"> sign-in </b>
+        or
+        <a href ng-click="auth.show = 'reg'" ng-show="auth.show !== 'reg'"> register for an account.</a>
+        <b ng-show="auth.show === 'reg'"> register for an account.</b>
+    </p>
+
+    <div class="small-12"><div class="primary auth  align-right" ng-show="auth.show === 'signIn'">
+        <sign-in></sign-in>
     </div>
-    <div class="card-section" ng-show="authCheck.uid">
-        {{dataObject}}
-    </div>
-    <div class="card-divider" ng-hide="authCheck.uid">
-        <h2 class="subheader">Sign In</h2>
-    </div>
-    <div class="card-section" ng-hide="authCheck.uid">
-        <form id="signin">
-            <div class="card-section"
-                 ng-init="
-                email='';
-                password='';
-                loginInputs = [
-                {name:'email', type:'text'},
-                {name:'password',type:'password'}
-            ];">
-                <label ng-repeat="inputs in loginInputs">
-                <span class="inline-label">
-                <span class="form-label">{{inputs.name | uppercase}}</span>
-                <input ng-model="$parent[inputs.name]" type="{{inputs.type}}">
-                </span>
-                </label>
-            </div>
-        </form>
-        <button form="signin" type="submit" class="button" value="Submit" ng-click="login(email,password);">Sign in</button>
-    </div>
+    <div class="primary auth align-right" ng-show="auth.show === 'reg'">
+        <reg></reg>
+    </div></div>
 </div>

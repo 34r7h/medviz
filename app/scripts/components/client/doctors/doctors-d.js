@@ -2,18 +2,20 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizNav
+* @name medviz.directive:doctors
 * @description
-* # medvizNav
+* # doctors
 */
 angular.module('medviz')
-.directive('medvizNav', function ()
+.directive('doctors', function ()
 {
     return {
-        templateUrl: 'scripts/components/display/medviz-nav/medviz-nav-d.html',
+        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
         
         restrict: 'EA',
+        scope: {
 
+        },
         link: function (scope, el, attrs)
         {
 

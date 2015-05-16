@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: adminUi', function ()
+describe('Directive: admin', function ()
 {
 
     // load the directive's module
@@ -16,7 +16,7 @@ describe('Directive: adminUi', function ()
 
     it('should do something', inject(function ($compile)
     {
-        element = $compile('<admin-ui></admin-ui>');
+        element = $compile('<admin></admin>');
         expect(true).toBe(true);
     }));
 });

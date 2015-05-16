@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:adminUi
+* @name medviz.directive:reg
 * @description
-* # adminUi
+* # reg
 */
 angular.module('medviz')
-.directive('adminUi', function ()
+.directive('reg', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/admin-ui/admin-ui-d.html',
+        templateUrl: 'scripts/components/common/auth/reg/reg-d.html',
         
         restrict: 'EA',
         scope: {
@@ -20,9 +20,9 @@ angular.module('medviz')
         {
 
         },
-        controller: function ($scope)
+        controller: function ($scope, Api)
         {
-
+            $scope.newUser = Api.newUser;
         }
     };
 });

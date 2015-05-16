@@ -2,15 +2,15 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizSections
+* @name medviz.directive:client
 * @description
-* # medvizSections
+* # client
 */
 angular.module('medviz')
-.directive('medvizSections', function ()
+.directive('client', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/medviz-sections/medviz-sections-d.html',
+        templateUrl: 'scripts/components/client/client-d.html',
         
         restrict: 'EA',
         scope: {
@@ -20,7 +20,7 @@ angular.module('medviz')
         {
 
         },
-        controller: function ($scope)
+        controller: function ($scope, Client)
         {
 
         }

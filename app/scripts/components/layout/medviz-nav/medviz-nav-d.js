@@ -2,20 +2,18 @@
 
 /**
 * @ngdoc directive
-* @name medviz.directive:reg
+* @name medviz.directive:medvizNav
 * @description
-* # reg
+* # medvizNav
 */
 angular.module('medviz')
-.directive('reg', function ()
+.directive('medvizNav', function ()
 {
     return {
-        templateUrl: 'scripts/components/common/reg/reg-d.html',
+        templateUrl: 'scripts/components/layout/medviz-nav/medviz-nav-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
         link: function (scope, el, attrs)
         {
 

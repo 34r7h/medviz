@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: medvizSections', function ()
+describe('Directive: visit', function ()
 {
 
     // load the directive's module
@@ -16,7 +16,7 @@ describe('Directive: medvizSections', function ()
 
     it('should do something', inject(function ($compile)
     {
-        element = $compile('<medviz-sections></medviz-sections>');
+        element = $compile('<visit></visit>');
         expect(true).toBe(true);
     }));
 });

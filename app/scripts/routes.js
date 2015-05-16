@@ -16,7 +16,7 @@ angular.module('medviz')
 				url: '',
 				abstract: true,
 				template: '<medviz-header></medviz-header>' +
-				'<div ui-view="{{view.view}}" ></div>' +
+				'<div ui-view ></div>' +
 				'<medviz-footer></medviz-footer>',
 				controller: function($scope, $state, Data){
 					$scope.view = {};
@@ -33,8 +33,9 @@ angular.module('medviz')
 				controller: function($scope){}
 			})
 			.state('medviz.client', {
-				url: '/client/:view',
-				views: {
+				url: '/client',
+				template: '<client></client>'
+				/*views: {
 					'':{
 						template:'<auth></auth>'
 					},
@@ -44,7 +45,7 @@ angular.module('medviz')
 					'form': {
 						template:'<medviz-form></medviz-form>'
 					}
-				}
+				}*/
 			})
 			/*.state('medviz.auth.login', {
 				url: '/auth',
@@ -63,9 +64,9 @@ angular.module('medviz')
 				template: '<medviz-table>'
 			})*/
 			.state('medviz.admin', {
-				url: '/admin/:view',
-				//template: '<ui-view></ui-view>'
-				views:{
+				url: '/admin',
+				template: '<admin></admin>'
+				/*views:{
 					'':{
 						template:'<auth></auth>'
 					},
@@ -75,7 +76,7 @@ angular.module('medviz')
 					dashboard:{
 						template: '<medviz-sections></medviz-sections>'
 					}
-				}
+				}*/
 			})
 			/*.state('medviz.admin.dashboard', {
 				url: '/dashboard',
