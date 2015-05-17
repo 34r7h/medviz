@@ -64,6 +64,442 @@ angular.module('medviz')
 		$urlRouterProvider.otherwise('/');
 	}]);
 
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:admin
+* @description
+* # admin
+*/
+angular.module('medviz')
+.directive('admin', function ()
+{
+    return {
+        templateUrl: 'scripts/components/admin/admin-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Admin", function ($scope, Admin)
+        {
+
+        }]
+    };
+});
+/**
+ * @ngdoc service
+ * @name medviz.Admin
+ * @description
+ * # Admin
+ * Factory in the medviz.
+ */
+angular.module('medviz')
+    .factory('Admin', ["Firebase", "Data", "$firebaseObject", "$firebaseArray", function (Firebase, Data, $firebaseObject, $firebaseArray)
+    {
+        'use strict';
+
+        // INITIALIZATION
+        var uploadArray = [
+            {
+                "FIELD1":1,
+                "ZONE":"",
+                "CITY":"Aataouia",
+                "MUNICIPALITY":"Aataouia",
+                "DOCTOR NAME":"Id Ahmad Hicham",
+                "SPECIALITY":"MG",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Laaroussi Nadia",
+                "SPECIALITY":"MG (Urgences) ",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Laglaoui Aicha",
+                "SPECIALITY":"MG (Urgences) ",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Lahmidi Salwa",
+                "SPECIALITY":"MG",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Lemdilki Fatna",
+                "SPECIALITY":"MG",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Lemkhanet Ilham",
+                "SPECIALITY":"MG",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Mahboub",
+                "SPECIALITY":"MG (Urgences) ",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Mouti Amina",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Touriki Youssef",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Ouajou Meriem",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Tirizite Naima",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"",
+                "SPECIALITY":"",
+                "SECTOR FIELD":"",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":2,
+                "ZONE":"",
+                "CITY":"AFOURAR ",
+                "MUNICIPALITY":"AFOURAR ",
+                "DOCTOR NAME":"El Aidi Zineb",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"El Khaldi Mustapha",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Najim Ahmed",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"Ezzahiri",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CENTRE DE SANTE TIMOULILT ",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"",
+                "DOCTOR NAME":"",
+                "SPECIALITY":"",
+                "SECTOR FIELD":"",
+                "ADDRESS":"",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":3,
+                "ZONE":"",
+                "CITY":"AGADIR",
+                "MUNICIPALITY":"CENTRE VILLE",
+                "DOCTOR NAME":"Abadi Karim",
+                "SPECIALITY":"MG ",
+                "SECTOR FIELD":"CABINET PRIVE",
+                "ADDRESS":"AV , MARRAKECH ",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"CENTRE VILLE",
+                "DOCTOR NAME":"Abadi Laila",
+                "SPECIALITY":"",
+                "SECTOR FIELD":"CABINET PRIVE",
+                "ADDRESS":"Rue de Marrakech , Imm ACHROUK",
+                "CONTACT NUMBER":""
+            },
+            {
+                "FIELD1":null,
+                "ZONE":"",
+                "CITY":"",
+                "MUNICIPALITY":"Talborjt",
+                "DOCTOR NAME":"Abassor Aicha",
+                "SPECIALITY":"",
+                "SECTOR FIELD":"CABINET PRIVE",
+                "ADDRESS":"34, Rue Ibn Toumart",
+                "CONTACT NUMBER":""
+            }
+        ];
+
+        var dataRef = Data.ref;
+        var dataArray = $firebaseArray(dataRef);
+        console.log('Admin Factory Injected With: ',arguments);
+
+        function create(type, props){
+            var createRef = dataRef.child(type);
+            var createArray = $firebaseArray(createRef);
+            createArray.$add(props);
+            // TODO add to index
+        }
+        // ('doctors', newDoc);
+
+        (function uploadDocs(){
+            var uploadRef = dataRef.child('test');
+            var docCity = '';
+            angular.forEach(uploadArray, function(doctor, key){
+                if(doctor['DOCTOR NAME'].length > 0){
+                    if (doctor.CITY.length > 0){
+                        docCity = doctor.CITY.toLowerCase();
+                    }
+                    var newDoc = {};
+                    angular.forEach(doctor, function(entry, key){
+                        newDoc[key.toLowerCase()] = entry;
+                        newDoc.city = docCity;
+                        var uploadRef = dataRef.child('doctors');
+                        var uploadArray = $firebaseArray(uploadRef);
+                        uploadArray.$add(newDoc, function(error, data){
+                            if(error){
+                                console.log('blimey, somethings fucked in the uploading');
+                            } else {
+                                console.log(data);
+                            }
+                        });
+                    })
+
+                }
+            })
+         })();
+
+        function update(type, id, ob){
+            var updateRef = dataRef.child(type);
+            updateRef = updateRef.child(id);
+            var updateObject = $firebaseObject(updateRef);
+            updateObject.$value = ob;
+            updateObject.$save();
+            // TODO update index
+        }
+        //('users','-JpOhiJ7c6BDktXbqre0', {email:'email', name:'name'});
+
+        function remove(type, id){
+            var removeRef = dataRef.child(type);
+            removeRef = removeRef.child(id);
+            var removeObject = $firebaseObject(removeRef);
+            removeObject.$remove();
+        }
+        //('users','-JpQE_p5eEk8fKXUuCFU');
+
+        // ACTUAL DEFINITION
+        var service = {
+            create: create,
+            update: update,
+            remove: remove
+        };
+
+        return service;
+    }]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:landing
+* @description
+* # landing
+*/
+angular.module('medviz')
+.directive('landing', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/landing-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Landing", function ($scope, Landing)
+        {
+
+        }]
+    };
+});
+/**
+ * @ngdoc service
+ * @name medviz.Landing
+ * @description
+ * # Landing
+ * Service in the medviz.
+ */
+angular.module('medviz')
+    .service('Landing', function ()
+    {
+        'use strict';
+
+        // AngularJS will instantiate a singleton by calling "new" on this function
+    });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:client
+* @description
+* # client
+*/
+angular.module('medviz')
+.directive('client', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/client-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Client", function ($scope, Client)
+        {
+
+        }]
+    };
+});
+/**
+ * @ngdoc service
+ * @name medviz.Client
+ * @description
+ * # Client
+ * Factory in the medviz.
+ */
+angular.module('medviz')
+    .factory('Client', function ()
+    {
+        'use strict';
+
+        // INITIALIZATION
+
+
+        // ACTUAL DEFINITION
+        var service = {
+            someMethod: function ()
+            {
+
+            }
+        };
+
+        return service;
+    });
 /**
  * @ngdoc service
  * @name medviz.Api
@@ -125,15 +561,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:admin
+* @name medviz.directive:labs
 * @description
-* # admin
+* # labs
 */
 angular.module('medviz')
-.directive('admin', function ()
+.directive('labs', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/admin-d.html',
+        templateUrl: 'scripts/components/admin/labs/labs-d.html',
         
         restrict: 'EA',
         scope: {
@@ -143,77 +579,25 @@ angular.module('medviz')
         {
 
         },
-        controller: ["$scope", "Admin", function ($scope, Admin)
+        controller: ["$scope", function ($scope)
         {
 
         }]
     };
 });
-/**
- * @ngdoc service
- * @name medviz.Admin
- * @description
- * # Admin
- * Factory in the medviz.
- */
-angular.module('medviz')
-    .factory('Admin', ["Firebase", "Data", "$firebaseObject", "$firebaseArray", function (Firebase, Data, $firebaseObject, $firebaseArray)
-    {
-        'use strict';
-
-        // INITIALIZATION
-        var dataRef = Data.ref;
-        var dataArray = $firebaseArray(dataRef);
-        console.log('Admin Factory Injected With: ',arguments);
-
-        function create(type, props){
-            var createRef = dataRef.child(type);
-            var createArray = $firebaseArray(createRef);
-            createArray.$add(props);
-            // TODO add to index
-        }
-        // ('users', {name:'name', role:'admin'});
-
-        function update(type, id, ob){
-            var updateRef = dataRef.child(type);
-            updateRef = updateRef.child(id);
-            var updateObject = $firebaseObject(updateRef);
-            updateObject.$value = ob;
-            updateObject.$save();
-            // TODO update index
-        }
-        //('users','-JpOhiJ7c6BDktXbqre0', {email:'email', name:'name'});
-
-        function remove(type, id){
-            var removeRef = dataRef.child(type);
-            removeRef = removeRef.child(id);
-            var removeObject = $firebaseObject(removeRef);
-            removeObject.$remove();
-        }
-        //('users','-JpQE_p5eEk8fKXUuCFU');
-
-        // ACTUAL DEFINITION
-        var service = {
-            create: create,
-            update: update,
-            remove: remove
-        };
-
-        return service;
-    }]);
 'use strict';
 
 /**
 * @ngdoc directive
-* @name medviz.directive:client
+* @name medviz.directive:reps
 * @description
-* # client
+* # reps
 */
 angular.module('medviz')
-.directive('client', function ()
+.directive('reps', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/client-d.html',
+        templateUrl: 'scripts/components/admin/reps/reps-d.html',
         
         restrict: 'EA',
         scope: {
@@ -223,79 +607,12 @@ angular.module('medviz')
         {
 
         },
-        controller: ["$scope", "Client", function ($scope, Client)
+        controller: ["$scope", function ($scope)
         {
 
         }]
     };
 });
-/**
- * @ngdoc service
- * @name medviz.Client
- * @description
- * # Client
- * Factory in the medviz.
- */
-angular.module('medviz')
-    .factory('Client', function ()
-    {
-        'use strict';
-
-        // INITIALIZATION
-
-
-        // ACTUAL DEFINITION
-        var service = {
-            someMethod: function ()
-            {
-
-            }
-        };
-
-        return service;
-    });
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:landing
-* @description
-* # landing
-*/
-angular.module('medviz')
-.directive('landing', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/landing-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Landing", function ($scope, Landing)
-        {
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Landing
- * @description
- * # Landing
- * Service in the medviz.
- */
-angular.module('medviz')
-    .service('Landing', function ()
-    {
-        'use strict';
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
 'use strict';
 
 /**
@@ -356,15 +673,71 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:labs
+* @name medviz.directive:features
 * @description
-* # labs
+* # features
 */
 angular.module('medviz')
-.directive('labs', function ()
+.directive('features', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/labs/labs-d.html',
+        templateUrl: 'scripts/components/landing/features/features-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:fold
+* @description
+* # fold
+*/
+angular.module('medviz')
+.directive('fold', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:testimonials
+* @description
+* # testimonials
+*/
+angular.module('medviz')
+.directive('testimonials', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
         
         restrict: 'EA',
         scope: {
@@ -409,6 +782,62 @@ angular.module('medviz')
     };
 });
 
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:doctors
+* @description
+* # doctors
+*/
+angular.module('medviz')
+.directive('doctors', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizFooter
+* @description
+* # medvizFooter
+*/
+angular.module('medviz')
+.directive('medvizFooter', function ()
+{
+    return {
+        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
 'use strict';
 
 /**
@@ -530,118 +959,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:features
-* @description
-* # features
-*/
-angular.module('medviz')
-.directive('features', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/features/features-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:reps
-* @description
-* # reps
-*/
-angular.module('medviz')
-.directive('reps', function ()
-{
-    return {
-        templateUrl: 'scripts/components/admin/reps/reps-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:testimonials
-* @description
-* # testimonials
-*/
-angular.module('medviz')
-.directive('testimonials', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizFooter
-* @description
-* # medvizFooter
-*/
-angular.module('medviz')
-.directive('medvizFooter', function ()
-{
-    return {
-        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:medvizHeader
 * @description
 * # medvizHeader
@@ -663,60 +980,6 @@ angular.module('medviz')
     };
 }]);
 
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:medvizNav
-* @description
-* # medvizNav
-*/
-angular.module('medviz')
-.directive('medvizNav', function ()
-{
-    return {
-        templateUrl: 'scripts/components/layout/medviz-nav/medviz-nav-d.html',
-        
-        restrict: 'EA',
-
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:doctors
-* @description
-* # doctors
-*/
-angular.module('medviz')
-.directive('doctors', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
@@ -749,20 +1012,18 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:fold
+* @name medviz.directive:medvizNav
 * @description
-* # fold
+* # medvizNav
 */
 angular.module('medviz')
-.directive('fold', function ()
+.directive('medvizNav', function ()
 {
     return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        templateUrl: 'scripts/components/layout/medviz-nav/medviz-nav-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
         link: function (scope, el, attrs)
         {
 
