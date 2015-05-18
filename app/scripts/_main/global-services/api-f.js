@@ -22,7 +22,12 @@ angular.module('medviz')
             login: Auth.login,
             logout: Auth.logout,
             authCheck: Auth.authCheck,
-	          newUser: Auth.newUser
+	          newUser: Auth.newUser,
+            create: Admin.create,
+            upload: Admin.upload,
+            update: Admin.update,
+            remove: Admin.remove
+
         };
 
         return service;

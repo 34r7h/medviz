@@ -24,8 +24,8 @@ angular.module('medviz')
                     console.log('Error creating user:', error);
                 } else {
                     console.log("Successfully created user account with uid:", userData.uid);
-
                     console.log(userData);
+
                     var addUser = ref.child('users');
 	                  var addUserIndex = ref.child('index/users');
                     var theUser = addUser.push({
