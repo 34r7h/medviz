@@ -64,6 +64,68 @@ angular.module('medviz')
 		$urlRouterProvider.otherwise('/');
 	}]);
 
+/**
+ * @ngdoc service
+ * @name medviz.Api
+ * @description
+ * # Api
+ * Factory in the medviz.
+ */
+angular.module('medviz')
+    .factory('Api', ["Auth", "Admin", "Client", function (Auth, Admin, Client)
+    {
+        'use strict';
+
+        // INITIALIZATION
+
+    // Function Definitions
+	    console.log('API Factory Injected With: ',arguments);
+
+	    //function reloadState() {$state.go($state.current, {}, {reload: true});}
+
+        // ACTUAL DEFINITION
+        var service = {
+            login: Auth.login,
+            logout: Auth.logout,
+            authCheck: Auth.authCheck,
+	          newUser: Auth.newUser,
+            create: Admin.create,
+            upload: Admin.upload,
+            update: Admin.update,
+            remove: Admin.remove
+
+        };
+
+        return service;
+    }]);
+/**
+ * @ngdoc service
+ * @name medviz.Data
+ * @description
+ * # Data
+ * Factory in the medviz.
+ */
+angular.module('medviz')
+    .factory('Data', ["$firebaseObject", "$firebaseArray", "Firebase", function ($firebaseObject, $firebaseArray, Firebase)
+    {
+        'use strict';
+
+        // INITIALIZATION
+        var ref = new Firebase('https://medviz.firebaseio.com');
+        var dataObject= $firebaseObject(ref);
+        var dataArray=$firebaseArray(ref);
+
+
+        // ACTUAL DEFINITION
+        var service = {
+            ref: ref,
+            dataObject: dataObject,
+            dataArray: dataArray
+        };
+
+        return service;
+    }]);
+
 'use strict';
 
 /**
@@ -105,239 +167,6 @@ angular.module('medviz')
         'use strict';
 
         // INITIALIZATION
-        var uploadArray = [
-            {
-                "FIELD1":1,
-                "ZONE":"",
-                "CITY":"Aataouia",
-                "MUNICIPALITY":"Aataouia",
-                "DOCTOR NAME":"Id Ahmad Hicham",
-                "SPECIALITY":"MG",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Laaroussi Nadia",
-                "SPECIALITY":"MG (Urgences) ",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Laglaoui Aicha",
-                "SPECIALITY":"MG (Urgences) ",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Lahmidi Salwa",
-                "SPECIALITY":"MG",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Lemdilki Fatna",
-                "SPECIALITY":"MG",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Lemkhanet Ilham",
-                "SPECIALITY":"MG",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Mahboub",
-                "SPECIALITY":"MG (Urgences) ",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Mouti Amina",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Touriki Youssef",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"HOPITAL LOCAL ATTAOUI",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Ouajou Meriem",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Tirizite Naima",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE ATTAOUIA",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"",
-                "SPECIALITY":"",
-                "SECTOR FIELD":"",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":2,
-                "ZONE":"",
-                "CITY":"AFOURAR ",
-                "MUNICIPALITY":"AFOURAR ",
-                "DOCTOR NAME":"El Aidi Zineb",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"El Khaldi Mustapha",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Najim Ahmed",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE AFOURAR",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"Ezzahiri",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CENTRE DE SANTE TIMOULILT ",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"",
-                "DOCTOR NAME":"",
-                "SPECIALITY":"",
-                "SECTOR FIELD":"",
-                "ADDRESS":"",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":3,
-                "ZONE":"",
-                "CITY":"AGADIR",
-                "MUNICIPALITY":"CENTRE VILLE",
-                "DOCTOR NAME":"Abadi Karim",
-                "SPECIALITY":"MG ",
-                "SECTOR FIELD":"CABINET PRIVE",
-                "ADDRESS":"AV , MARRAKECH ",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"CENTRE VILLE",
-                "DOCTOR NAME":"Abadi Laila",
-                "SPECIALITY":"",
-                "SECTOR FIELD":"CABINET PRIVE",
-                "ADDRESS":"Rue de Marrakech , Imm ACHROUK",
-                "CONTACT NUMBER":""
-            },
-            {
-                "FIELD1":null,
-                "ZONE":"",
-                "CITY":"",
-                "MUNICIPALITY":"Talborjt",
-                "DOCTOR NAME":"Abassor Aicha",
-                "SPECIALITY":"",
-                "SECTOR FIELD":"CABINET PRIVE",
-                "ADDRESS":"34, Rue Ibn Toumart",
-                "CONTACT NUMBER":""
-            }
-        ];
 
         var dataRef = Data.ref;
         var dataArray = $firebaseArray(dataRef);
@@ -351,32 +180,37 @@ angular.module('medviz')
         }
         // ('doctors', newDoc);
 
-        (function uploadDocs(){
-            var uploadRef = dataRef.child('test');
+	    // TODO refactor for all types, currently just doctors..
+        function upload(type, list){
+	        var uploadRef = dataRef.child(type);
+	        var uploadData = $firebaseArray(uploadRef);
             var docCity = '';
-            angular.forEach(uploadArray, function(doctor, key){
-                if(doctor['DOCTOR NAME'].length > 0){
-                    if (doctor.CITY.length > 0){
-                        docCity = doctor.CITY.toLowerCase();
+            angular.forEach(list, function(doctor, key){
+                if(doctor['DOCTOR NAME'].length > 2){
+	                console.log('doctor: ',doctor['DOCTOR NAME']);
+	                var newDoc = {};
+	                  if (doctor.CITY.length > 2){
+		                  console.log('city: ',doctor.CITY);
+		                  docCity = doctor.CITY.toLowerCase();
                     }
-                    var newDoc = {};
+
                     angular.forEach(doctor, function(entry, key){
                         newDoc[key.toLowerCase()] = entry;
-                        newDoc.city = docCity;
-                        var uploadRef = dataRef.child('doctors');
-                        var uploadArray = $firebaseArray(uploadRef);
-                        uploadArray.$add(newDoc, function(error, data){
-                            if(error){
-                                console.log('blimey, somethings fucked in the uploading');
-                            } else {
-                                console.log(data);
-                            }
-                        });
-                    })
+                        newDoc['city'] = docCity;
+                    });
+	                console.log('new doctor object: ',newDoc);
+	                uploadData.$add(newDoc, function(error, data){
+		                if(error){
+			                console.log('blimey, somethings fucked in the uploading');
+		                } else {
+			                console.log('data',data);
+		                }
+	                });
 
                 }
             })
-         })();
+         }
+				// ('doctors',[{name:'doc spok', address:'123 lord road'},{'doctors',name:'doc spok2', address:'1234 lord road'}])
 
         function update(type, id, ob){
             var updateRef = dataRef.child(type);
@@ -399,54 +233,13 @@ angular.module('medviz')
         // ACTUAL DEFINITION
         var service = {
             create: create,
+	          upload: upload,
             update: update,
             remove: remove
         };
 
         return service;
     }]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:landing
-* @description
-* # landing
-*/
-angular.module('medviz')
-.directive('landing', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/landing-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Landing", function ($scope, Landing)
-        {
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Landing
- * @description
- * # Landing
- * Service in the medviz.
- */
-angular.module('medviz')
-    .service('Landing', function ()
-    {
-        'use strict';
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
 'use strict';
 
 /**
@@ -500,62 +293,104 @@ angular.module('medviz')
 
         return service;
     });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:landing
+* @description
+* # landing
+*/
+angular.module('medviz')
+.directive('landing', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/landing-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Landing", function ($scope, Landing)
+        {
+
+        }]
+    };
+});
 /**
  * @ngdoc service
- * @name medviz.Api
+ * @name medviz.Landing
  * @description
- * # Api
- * Factory in the medviz.
+ * # Landing
+ * Service in the medviz.
  */
 angular.module('medviz')
-    .factory('Api', ["Auth", "Admin", "Client", function (Auth, Admin, Client)
+    .service('Landing', function ()
     {
         'use strict';
 
-        // INITIALIZATION
+        // AngularJS will instantiate a singleton by calling "new" on this function
+    });
+'use strict';
 
-    // Function Definitions
-	    console.log('API Factory Injected With: ',arguments);
-
-	    //function reloadState() {$state.go($state.current, {}, {reload: true});}
-
-        // ACTUAL DEFINITION
-        var service = {
-            login: Auth.login,
-            logout: Auth.logout,
-            authCheck: Auth.authCheck,
-	          newUser: Auth.newUser
-        };
-
-        return service;
-    }]);
 /**
- * @ngdoc service
- * @name medviz.Data
- * @description
- * # Data
- * Factory in the medviz.
- */
+* @ngdoc directive
+* @name medviz.directive:medical
+* @description
+* # medical
+*/
 angular.module('medviz')
-    .factory('Data', ["$firebaseObject", "$firebaseArray", "Firebase", function ($firebaseObject, $firebaseArray, Firebase)
-    {
-        'use strict';
+.directive('medical', function ()
+{
+    return {
+        templateUrl: 'scripts/components/admin/medical/medical-d.html',
+        
+        restrict: 'EA',
+        scope: {
 
-        // INITIALIZATION
-        var ref = new Firebase('https://medviz.firebaseio.com');
-        var dataObject= $firebaseObject(ref);
-        var dataArray=$firebaseArray(ref);
+        },
+        link: function (scope, el, attrs)
+        {
 
+        },
+        controller: ["$scope", function ($scope)
+        {
 
-        // ACTUAL DEFINITION
-        var service = {
-            ref: ref,
-            dataObject: dataObject,
-            dataArray: dataArray
-        };
+        }]
+    };
+});
+'use strict';
 
-        return service;
-    }]);
+/**
+* @ngdoc directive
+* @name medviz.directive:agenda
+* @description
+* # agenda
+*/
+angular.module('medviz')
+.directive('agenda', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
+
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
 
 'use strict';
 
@@ -617,44 +452,16 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medical
+* @name medviz.directive:visit
 * @description
-* # medical
+* # visit
 */
 angular.module('medviz')
-.directive('medical', function ()
+.directive('visit', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/medical/medical-d.html',
+        templateUrl: 'scripts/components/client/visit/visit-d.html',
         
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:visits
-* @description
-* # visits
-*/
-angular.module('medviz')
-.directive('visits', function ()
-{
-    return {
-        templateUrl: 'scripts/components/admin/visits/visits-d.html',
-
         restrict: 'EA',
         scope: {
 
@@ -683,6 +490,151 @@ angular.module('medviz')
     return {
         templateUrl: 'scripts/components/landing/features/features-d.html',
         
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:auth
+* @description
+* # auth
+*/
+angular.module('medviz')
+.directive('auth', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/auth/auth-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+        },
+        controller: ["$scope", "$state", "Api", function ($scope, $state, Api)
+        {
+
+            $scope.logout = Api.logout;
+            $scope.authCheck = Api.authCheck();
+            $scope.newUser = Api.newUser;
+
+        }]
+    };
+});
+/**
+ * @ngdoc service
+ * @name medviz.Auth
+ * @description
+ * # Auth
+ * Factory in the medviz.
+ */
+angular.module('medviz')
+    .factory('Auth', ["Firebase", "$rootScope", "$state", "$stateParams", "Data", function (Firebase, $rootScope, $state, $stateParams, Data)
+    {
+        'use strict';
+
+        // INITIALIZATION
+	    var ref = new Firebase('https://medviz.firebaseio.com');
+	    function newUser(name, role, email, password){
+	        // TODO set-up index
+            ref.createUser({
+	              name     : name,
+	              role     : role,
+                email    : email,
+                password : password
+            }, function(error, userData) {
+                if (error) {
+                    console.log('Error creating user:', error);
+                } else {
+                    console.log("Successfully created user account with uid:", userData.uid);
+                    console.log(userData);
+
+                    var addUser = ref.child('users');
+	                  var addUserIndex = ref.child('index/users');
+                    var theUser = addUser.push({
+	                      name: name,
+	                      role: role,
+                        uid: userData.uid,
+                        email: email
+                    }, function(error){
+	                    if(error){
+		                    console.log('No user data written');
+	                    } else {
+		                    var id = theUser.key();
+		                    console.log('User created');
+		                    addUserIndex.child(userData.uid).set({
+			                    name: name,
+			                    role: role,
+			                    id: id,
+			                    email: email
+		                    });
+	                    }
+                    });
+
+                }
+            });
+        }
+	    function login(email, pass) {
+		    ref.authWithPassword({email:email,password:pass}, function(error, authData){
+			    if (error) {
+				    console.log(error);
+			    } else {
+				    console.log('signed in as',authData);
+				    console.log(Data.dataObject.index.users[authData.uid].role);
+				    $rootScope.role = Data.dataObject.index.users[authData.uid].role;
+				    $rootScope.authData = authData;
+				    if($rootScope.role === 'rep'){
+					    $state.go('medviz.client');
+				    } else if ($rootScope.role === 'customer') {
+					    $state.go('medviz.admin')
+				    } else {
+					    $state.reload();
+				    }
+			    }
+		    });
+	    }
+	    function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
+	    function authCheck(){return ref.getAuth();}
+
+
+        // ACTUAL DEFINITION
+        var service = {
+		        newUser: newUser,
+		        login: login,
+            logout: logout,
+            authCheck: authCheck
+        };
+
+        return service;
+    }]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:visits
+* @description
+* # visits
+*/
+angular.module('medviz')
+.directive('visits', function ()
+{
+    return {
+        templateUrl: 'scripts/components/admin/visits/visits-d.html',
+
         restrict: 'EA',
         scope: {
 
@@ -757,35 +709,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:agenda
-* @description
-* # agenda
-*/
-angular.module('medviz')
-.directive('agenda', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/agenda/agenda-d.html',
-
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:doctors
 * @description
 * # doctors
@@ -842,123 +765,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:auth
-* @description
-* # auth
-*/
-angular.module('medviz')
-.directive('auth', function ()
-{
-    return {
-        templateUrl: 'scripts/components/common/auth/auth-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-        },
-        controller: ["$scope", "$state", "Api", function ($scope, $state, Api)
-        {
-
-            $scope.logout = Api.logout;
-            $scope.authCheck = Api.authCheck();
-            $scope.newUser = Api.newUser;
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Auth
- * @description
- * # Auth
- * Factory in the medviz.
- */
-angular.module('medviz')
-    .factory('Auth', ["Firebase", "$rootScope", "$state", "$stateParams", "Data", function (Firebase, $rootScope, $state, $stateParams, Data)
-    {
-        'use strict';
-
-        // INITIALIZATION
-	    var ref = new Firebase('https://medviz.firebaseio.com');
-	    function newUser(name, role, email, password){
-	        // TODO set-up index
-            ref.createUser({
-	              name     : name,
-	              role     : role,
-                email    : email,
-                password : password
-            }, function(error, userData) {
-                if (error) {
-                    console.log('Error creating user:', error);
-                } else {
-                    console.log("Successfully created user account with uid:", userData.uid);
-
-                    console.log(userData);
-                    var addUser = ref.child('users');
-	                  var addUserIndex = ref.child('index/users');
-                    var theUser = addUser.push({
-	                      name: name,
-	                      role: role,
-                        uid: userData.uid,
-                        email: email
-                    }, function(error){
-	                    if(error){
-		                    console.log('No user data written');
-	                    } else {
-		                    var id = theUser.key();
-		                    console.log('User created');
-		                    addUserIndex.child(userData.uid).set({
-			                    name: name,
-			                    role: role,
-			                    id: id,
-			                    email: email
-		                    });
-	                    }
-                    });
-
-                }
-            });
-        }
-	    function login(email, pass) {
-		    ref.authWithPassword({email:email,password:pass}, function(error, authData){
-			    if (error) {
-				    console.log(error);
-			    } else {
-				    console.log('signed in as',authData);
-				    console.log(Data.dataObject.index.users[authData.uid].role);
-				    $rootScope.role = Data.dataObject.index.users[authData.uid].role;
-				    $rootScope.authData = authData;
-				    if($rootScope.role === 'rep'){
-					    $state.go('medviz.client');
-				    } else if ($rootScope.role === 'customer') {
-					    $state.go('medviz.admin')
-				    } else {
-					    $state.reload();
-				    }
-			    }
-		    });
-	    }
-	    function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
-	    function authCheck(){return ref.getAuth();}
-
-
-        // ACTUAL DEFINITION
-        var service = {
-		        newUser: newUser,
-		        login: login,
-            logout: logout,
-            authCheck: authCheck
-        };
-
-        return service;
-    }]);
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:medvizHeader
 * @description
 * # medvizHeader
@@ -980,34 +786,6 @@ angular.module('medviz')
     };
 }]);
 
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:visit
-* @description
-* # visit
-*/
-angular.module('medviz')
-.directive('visit', function ()
-{
-    return {
-        templateUrl: 'scripts/components/client/visit/visit-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
@@ -1067,6 +845,32 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
+* @name medviz.directive:signIn
+* @description
+* # signIn
+*/
+angular.module('medviz')
+.directive('signIn', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/auth/sign-in/sign-in-d.html',
+        
+        restrict: 'EA',
+
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Api", function ($scope, Api)
+        {
+            $scope.login = Api.login;
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
 * @name medviz.directive:reg
 * @description
 * # reg
@@ -1088,32 +892,6 @@ angular.module('medviz')
         controller: ["$scope", "Api", function ($scope, Api)
         {
             $scope.newUser = Api.newUser;
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:signIn
-* @description
-* # signIn
-*/
-angular.module('medviz')
-.directive('signIn', function ()
-{
-    return {
-        templateUrl: 'scripts/components/common/auth/sign-in/sign-in-d.html',
-        
-        restrict: 'EA',
-
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Api", function ($scope, Api)
-        {
-            $scope.login = Api.login;
         }]
     };
 });
