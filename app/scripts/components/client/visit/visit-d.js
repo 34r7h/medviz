@@ -7,15 +7,13 @@
 * # visit
 */
 angular.module('medviz')
-.directive('visit', function ()
+.directive('visit', function (Api)
 {
     return {
         templateUrl: 'scripts/components/client/visit/visit-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
         link: function (scope, el, attrs)
         {
 

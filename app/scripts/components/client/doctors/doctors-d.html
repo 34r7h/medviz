@@ -4,10 +4,13 @@
         <zf-accordion-item  ng-click="show.city = true" ng-repeat="(city, doctors) in doctorsIndexObject.city" title="{{city}}">
             <zf-accordion ng-if="show.city" auto-open="false">
                 <zf-accordion-item ng-repeat="doctor in doctors" title="{{doctorsObject[doctor]['doctor name']}}, {{doctorsObject[doctor].speciality}}">
-                    <div><b>{{doctorsObject[doctor].address}}</b>
-                    <p>{{doctorsObject[doctor]['sector field']}}</p>
-                    <p>{{doctorsObject[doctor]['contact number']}}</p>
-                    <a href="" ng-click="newVisit($parent.$root.auth.id, doctor)" class="button">Begin Visit</a> {{$parent.$root.auth.uid}}</div>
+                    <div>
+                        <b>{{doctorsObject[doctor].address}}</b>
+                        <p>{{doctorsObject[doctor]['sector field']}}</p>
+                        <p>{{doctorsObject[doctor]['contact number']}}</p>
+                        <a href="" ng-click="showForm = true" class="button">Begin Visit</a>
+                        <visit ng-show="showForm"></visit>
+                    </div>
                 </zf-accordion-item>
             </zf-accordion>
         </zf-accordion-item>
