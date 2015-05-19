@@ -7,7 +7,7 @@
                     <div><b>{{doctorsObject[doctor].address}}</b>
                     <p>{{doctorsObject[doctor]['sector field']}}</p>
                     <p>{{doctorsObject[doctor]['contact number']}}</p>
-                    <a href="" ng-click="newVisit('me', doctor)" class="button">Begin Visit</a></div>
+                    <a href="" ng-click="newVisit($parent.$root.auth.id, doctor)" class="button">Begin Visit</a> {{$parent.$root.auth.uid}}</div>
                 </zf-accordion-item>
             </zf-accordion>
         </zf-accordion-item>

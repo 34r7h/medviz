@@ -18,11 +18,12 @@ angular.module('medviz')
 				template: '<medviz-header></medviz-header>' +
 				'<div ui-view ></div>' +
 				'<medviz-footer></medviz-footer>',
-				controller: function($scope, $state, Data){
+				controller: function($scope, $state, Data, Api, $rootScope){
 					$scope.view = {};
 					$scope.ctrlData = Data.test;
 					$scope.view.section='';
 					$scope.view.view=$state.params.view;
+					$rootScope.auth = Api.authCheck();
 
 
 				}

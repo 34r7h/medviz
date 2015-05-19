@@ -15,8 +15,6 @@ angular.module('medviz')
     // Function Definitions
 	    console.log('API Factory Injected With: ',arguments);
 
-	    //function reloadState() {$state.go($state.current, {}, {reload: true});}
-
         // ACTUAL DEFINITION
         var service = {
             login: Auth.login,

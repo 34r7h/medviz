@@ -23,8 +23,10 @@ angular.module('medviz')
                 drugs: 'druggggggs'
             };
             $scope.visitsArray.$add($scope.newVisit);
-            $scope.user = Data.ref.child('users/'+user);
-            $scope.userObject = $firebaseObject($scope.user);
+            $scope.user = Data.ref.child('index/users/uid/'+user);
+	        $scope.userObject = $firebaseObject($scope.user);
+	        console.log('user as pertaining to a visit', $scope.userObject);
+
 
         }
 

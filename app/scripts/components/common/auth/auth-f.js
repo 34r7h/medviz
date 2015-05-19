@@ -60,13 +60,15 @@ angular.module('medviz')
 			    if (error) {
 				    console.log(error);
 			    } else {
-				    console.log('signed in as',authData);
-				    console.log(Data.dataObject.index.users[authData.uid].role);
-				    $rootScope.role = Data.dataObject.index.users[authData.uid].role;
-				    $rootScope.authData = authData;
-				    if($rootScope.role === 'rep'){
+				    console.log('signed in as',authData.uid);
+				    var uid = authData.uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+				    angular.forEach(Data.dataObject.index.users.uid[uid],function(id, key){
+					    $rootScope.role = Data.dataObject.users[id].role;
+					    $rootScope.auth = {authData:authData, id:id, role:Data.dataObject.users[id].role};
+				    });
+				    if($rootScope.auth.role === 'rep'){
 					    $state.go('medviz.client');
-				    } else if ($rootScope.role === 'customer') {
+				    } else if ($rootScope.auth.role === 'customer') {
 					    $state.go('medviz.admin')
 				    } else {
 					    $state.reload();
