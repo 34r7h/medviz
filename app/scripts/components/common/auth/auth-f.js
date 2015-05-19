@@ -6,7 +6,7 @@
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Auth', function (Firebase, $rootScope, $state, $stateParams, Data)
+    .factory('Auth', function (Firebase, $rootScope, $state, $stateParams, Data, $firebaseArray, $firebaseObject, $firebaseAuth)
     {
         'use strict';
 
@@ -77,7 +77,23 @@ angular.module('medviz')
 		    });
 	    }
 	    function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
-	    function authCheck(){return ref.getAuth();}
+	    function authCheck(){
+		    var getAuth = $firebaseAuth(Data.ref);
+		    console.log('signed in as', getAuth.$getAuth().uid);
+		    var uid = getAuth.$getAuth().uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+		    var userIndexRef = Data.ref.child('index/users/uid/'+uid);
+		    var userIndexArray = $firebaseArray(userIndexRef);
+		    var userIndexObject = $firebaseObject(userIndexRef);
+		    console.log(userIndexArray, userIndexObject);
+		    var realId = '';
+		    angular.forEach(userIndexObject, function(key, id){
+			    realId = id;
+			    $rootScope.auth = realId;
+			    return realId;
+		    });
+
+
+	    }
 
 
         // ACTUAL DEFINITION

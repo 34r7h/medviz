@@ -23,7 +23,6 @@ angular.module('medviz')
         {
 
             $scope.logout = Api.logout;
-            $scope.authCheck = Api.authCheck();
             $scope.newUser = Api.newUser;
 
         }

@@ -23,7 +23,7 @@ angular.module('medviz')
 					$scope.ctrlData = Data.test;
 					$scope.view.section='';
 					$scope.view.view=$state.params.view;
-					$rootScope.auth = {authData:Api.authCheck()}
+					Api.authCheck();
 				}
 			})
 			.state('medviz.landing', {
