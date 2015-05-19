@@ -28,23 +28,27 @@ angular.module('medviz')
 
                     var addUser = ref.child('users');
 	                  var addUserIndex = ref.child('index/users');
-                    var theUser = addUser.push({
-	                      name: name,
-	                      role: role,
-                        uid: userData.uid,
-                        email: email
-                    }, function(error){
+		                var newUser = {
+			                name: name,
+			                role: role,
+			                uid: userData.uid,
+			                email: email
+		                };
+                    var theUser = addUser.push(newUser, function(error){
 	                    if(error){
 		                    console.log('No user data written');
 	                    } else {
 		                    var id = theUser.key();
 		                    console.log('User created');
-		                    addUserIndex.child(userData.uid).set({
-			                    name: name,
-			                    role: role,
-			                    id: id,
-			                    email: email
+		                    angular.forEach(newUser, function(prop, key){
+			                    if(prop && prop.length>2){
+				                    var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+				                    addUserIndex.child(key+'/'+cleanProp).push(id);
+			                    }
 		                    });
+/*
+		                    addUserIndex.child(userData.uid).push(id);
+*/
 	                    }
                     });
 
