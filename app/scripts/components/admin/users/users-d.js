@@ -7,10 +7,10 @@
 * # users
 */
 angular.module('medviz')
-.directive('users', function ()
+.directive('users', function (Data, $firebaseObject, $firebaseArray)
 {
     return {
-        templateUrl: '/users-d.html',
+        templateUrl: 'scripts/components/admin/users/users-d.html',
         
         restrict: 'EA',
         scope: {

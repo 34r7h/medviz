@@ -7,7 +7,7 @@
 * # visits
 */
 angular.module('medviz')
-.directive('visits', function ()
+.directive('visits', function (Data, $firebaseObject, $firebaseArray)
 {
     return {
         templateUrl: 'scripts/components/admin/visits/visits-d.html',

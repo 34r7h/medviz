@@ -7,10 +7,10 @@
 * # drugs
 */
 angular.module('medviz')
-.directive('drugs', function ()
+.directive('drugs', function (Data, $firebaseObject, $firebaseArray)
 {
     return {
-        templateUrl: 'scripts/components/admin/drugs/drugs-d.htmll',
+        templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
         
         restrict: 'EA',
         scope: {

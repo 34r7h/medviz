@@ -4698,6 +4698,7 @@ angular.module('medviz')
             removeObject.$remove();
         }
         //('users','-JpQE_p5eEk8fKXUuCFU');
+        // TODO also remove all from index
 
         function refreshAddNewModel(model, newModel){
             newModel = {};
