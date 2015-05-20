@@ -39,11 +39,13 @@ IMPORTANT NOTE:
 
 @import  '../scripts/components/landing/_landing-d.scss';
 
-@import  '../scripts/components/admin/labs/_labs-d.scss';
+@import  '../scripts/components/admin/add-new/_add-new-d.scss';
 
-@import  '../scripts/components/admin/medical/_medical-d.scss';
+@import  '../scripts/components/admin/doctor/_doctor-d.scss';
 
-@import  '../scripts/components/admin/reps/_reps-d.scss';
+@import  '../scripts/components/admin/drugs/_drugs-d.scss';
+
+@import  '../scripts/components/admin/users/_users-d.scss';
 
 @import  '../scripts/components/admin/visits/_visits-d.scss';
 
@@ -69,8 +71,8 @@ IMPORTANT NOTE:
 
 @import  '../scripts/components/common/auth/profile/_profile-d.scss';
 
-@import  '../scripts/components/common/auth/sign-in/_sign-in-d.scss';
-
 @import  '../scripts/components/common/auth/reg/_reg-d.scss';
+
+@import  '../scripts/components/common/auth/sign-in/_sign-in-d.scss';
 
 // endinject

@@ -22,7 +22,13 @@ angular.module('medviz')
         },
         controller: function ($scope)
         {
-
+            $scope.visits = Data.ref.child('visits');
+            $scope.visitsObject = $firebaseObject($scope.visits);
+            $scope.visitsArray = $firebaseArray($scope.visits);
+    
+            $scope.visitsIndex = Data.ref.child('index/visits');
+            $scope.visitsIndexObject = $firebaseObject($scope.visitsIndex);
+            $scope.visitsIndexArray = $firebaseArray($scope.visitsIndex);
         }
     };
 });

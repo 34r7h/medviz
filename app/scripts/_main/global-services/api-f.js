@@ -25,6 +25,7 @@ angular.module('medviz')
             upload: Admin.upload,
             update: Admin.update,
             remove: Admin.remove,
+            refreshAddNewModel: Admin.refreshAddNewModel,
             newVisit: Client.newVisit
 
         };

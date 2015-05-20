@@ -1,13 +1,12 @@
-<div class="admin" ng-init="admin.show='visits'">
+<div class="admin" ng-init="admin.show='visits'; admin.views=['users','visits','drugs','doctor']">
     <ul class="menu-bar primary">
-        <li><a ng-click="admin.show='reps'">Edit Reps</a></li>
-        <li><a ng-click="admin.show='labs'">Edit Labs</a></li>
-        <li><a ng-click="admin.show='visits'">Edit Visits</a></li>
-        <li><a ng-click="admin.show='medical'">Edit Medical</a></li>
+        <li ng-repeat="view in admin.views"><a ng-click="$parent.admin.show=view">Edit {{view | uppercase}}</a></li>
+        <li><a ng-click="$parent.admin.show='add'">Add Object</a></li>
     </ul>
 
-    <reps ng-show="admin.show==='reps'"></reps>
-    <labs ng-show="admin.show==='labs'"></labs>
+    <add-new ng-show="admin.show==='add'"></add-new>
+    <users ng-show="admin.show==='users'"></users>
     <visits ng-show="admin.show==='visits'"></visits>
-    <medical ng-show="admin.show==='medical'"></medical>
+    <drugs ng-show="admin.show==='drugs'"></drugs>
+    <doctor ng-show="admin.show==='doctor'"></doctor>
 </div>

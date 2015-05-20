@@ -18,12 +18,22 @@ angular.module('medviz')
 
         function create(type, props){
             var createRef = dataRef.child(type);
+            var uploadIndexRef = dataRef.child('index/'+type);
             var createArray = $firebaseArray(createRef);
-            createArray.$add(props);
+            var uploadIndexData = $firebaseArray(uploadIndexRef);
+            createArray.$add(props).then(function(ref) {
+                var id = ref.key();
+                console.log("added record with id " + id);
+                angular.forEach(props, function(prop, key){
+                    if(prop && prop.length>2){
+                        var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+                        uploadIndexRef.child(key+'/'+cleanProp).push(id);
+                    }
+                });
+            });;
             // TODO add to index
         }
         // ('doctors', newDoc);
-
 	    // TODO refactor for all types, currently just doctors..
         function upload(type, list){
 	        var uploadRef = dataRef.child(type);
@@ -4672,8 +4682,6 @@ angular.module('medviz')
                }
            ]
          );*/
-
-
         function update(type, id, ob){
             var updateRef = dataRef.child(type);
             updateRef = updateRef.child(id);
@@ -4683,7 +4691,6 @@ angular.module('medviz')
             // TODO update index
         }
         //('users','-JpOhiJ7c6BDktXbqre0', {email:'email', name:'name'});
-
         function remove(type, id){
             var removeRef = dataRef.child(type);
             removeRef = removeRef.child(id);
@@ -4692,12 +4699,20 @@ angular.module('medviz')
         }
         //('users','-JpQE_p5eEk8fKXUuCFU');
 
+        function refreshAddNewModel(model, newModel){
+            newModel = {};
+            angular.forEach(model, function(prop, key){
+                newModel[key]=prop.val;
+            });
+        }
+
         // ACTUAL DEFINITION
         var service = {
             create: create,
 	          upload: upload,
             update: update,
-            remove: remove
+            remove: remove,
+            refreshAddNewModel: refreshAddNewModel
         };
 
         return service;
