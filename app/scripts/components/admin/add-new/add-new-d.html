@@ -1,0 +1,31 @@
+<div class="add-new" ng-init="addNew.show=''; addNewKey=''">
+    <ul class="menu-bar dark small-12">
+        <li ng-click="$parent.addNew.show='';$parent.addNew.show=key; $parent.addNewKey=key" ng-repeat="(key, val) in newModels">
+            <a>{{key | uppercase}}</a>
+        </li>
+    </ul>
+    <div ng-if="addNew.show.length > 0" class="grid-content small-12">
+       Form?{{addNewModels[addNewKey]}}
+        <form>
+            <div ng-repeat="(key,props) in newModels[addNewKey]">
+                <div ng-show="$parent.newModels[$parent.addNewKey][key].type !== 'multi-select'">
+                    <label for="{{key}}">{{key}}</label>
+                    <input
+                        id="{{key}}"
+                        ng-model="$parent.addNewModels[$parent.addNewKey][key]"
+                        type="{{$parent.newModels[$parent.addNewKey][key].type}}"/>
+                </div>
+                <div ng-show="$parent.newModels[$parent.addNewKey][key].type === 'multi-select'">
+                    <label for="{{key}}">{{key}}</label>
+                    <div ng-repeat="(sub_key, val) in $parent.newModels[$parent.addNewKey][key].val">
+                        <label for="{{sub_key}}">{{sub_key}}</label>
+                        <input
+                            id="{{sub_key}}"
+                            ng-model="$parent.$parent.addNewModels[$parent.$parent.addNewKey][$parent.key][sub_key]"
+                            type="{{$parent.$parent.newModels[$parent.$parent.addNewKey][$parent.key][sub_key].type}}"/></div>
+                </div>
+            </div>
+            <a ng-click="createEntry(addNewKey,addNewModels[addNewKey]); addNewModels={};refreshAddNewModel(newModels[addNewKey],addNewModels[addNewKey]);" href="" class="button">Submit New {{addNewKey}}</a>
+        </form>
+    </div>
+</div>
