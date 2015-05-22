@@ -79,8 +79,9 @@ angular.module('medviz')
 	    function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
 	    function authCheck(){
 		    var getAuth = $firebaseAuth(Data.ref);
-		    console.log('signed in as', getAuth.$getAuth().uid);
-		    var uid = getAuth.$getAuth().uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+		    console.log('signed in as', getAuth.$getAuth());
+		    var uid = getAuth.$getAuth();
+		    uid = uid.uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
 		    var userIndexRef = Data.ref.child('index/users/uid/'+uid);
 		    var userIndexArray = $firebaseArray(userIndexRef);
 		    var userIndexObject = $firebaseObject(userIndexRef);
