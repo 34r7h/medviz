@@ -7,7 +7,7 @@
 * # users
 */
 angular.module('medviz')
-.directive('users', function (Data, $firebaseObject, $firebaseArray)
+.directive('users', function (Api, Data, $firebaseObject, $firebaseArray)
 {
     return {
         templateUrl: 'scripts/components/admin/users/users-d.html',
@@ -29,6 +29,8 @@ angular.module('medviz')
             $scope.usersIndex = Data.ref.child('index/users');
             $scope.usersIndexObject = $firebaseObject($scope.usersIndex);
             $scope.usersIndexArray = $firebaseArray($scope.usersIndex);
+
+            $scope.update = Api.update;
         }
     };
 });

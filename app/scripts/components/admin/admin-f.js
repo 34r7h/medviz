@@ -4683,6 +4683,7 @@ angular.module('medviz')
            ]
          );*/
         function update(type, id, ob){
+            console.log('update args', arguments);
             var updateRef = dataRef.child(type);
             updateRef = updateRef.child(id);
             var updateObject = $firebaseObject(updateRef);

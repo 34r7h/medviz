@@ -1,13 +1,13 @@
-<div class="client" ng-init="client.show='doctors'">
+<div class="client" ng-init="client.show='doctor'">
     <ul class="menu-bar primary">
-        <li><a ng-click="client.show='doctors'">Doctors</a></li>
+        <li><a ng-click="client.show='doctor'">Doctors</a></li>
 <!--
         <li><a ng-click="client.show='agenda'">View Agenda</a></li>
 -->
         <li><a ng-click="client.show='visit'">Visits</a></li>
     </ul>
 
-    <doctors ng-show="client.show==='doctors'"></doctors>
+    <doctors ng-show="client.show==='doctor'"></doctors>
 <!--
     <agenda ng-show="client.show==='agenda'"></agenda>
 -->

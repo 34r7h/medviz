@@ -1,4 +1,4 @@
-<div class="admin" ng-init="admin.show='visits'; admin.views=['users','visits','drugs','doctor','add-new']">
+<div class="admin" ng-init="admin.show='visits'; admin.views=['users','visits','drugs','doctors','add-new']">
     <ul class="menu-bar primary">
         <li ng-repeat="view in admin.views">
             <a ng-show="view !== $parent.admin.show" ng-click="$parent.admin.show=view">Edit {{view | uppercase}}</a>
@@ -10,5 +10,5 @@
     <users ng-show="admin.show==='users'"></users>
     <visits ng-show="admin.show==='visits'"></visits>
     <drugs ng-show="admin.show==='drugs'"></drugs>
-    <doctor ng-show="admin.show==='doctor'"></doctor>
+    <doctors ng-show="admin.show==='doctors'"></doctors>
 </div>

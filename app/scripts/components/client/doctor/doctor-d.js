@@ -7,10 +7,10 @@
 * # doctors
 */
 angular.module('medviz')
-.directive('doctors', function ()
+.directive('doctor', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/doctors/doctors-d.html',
+        templateUrl: 'scripts/components/client/doctor/doctor-d.html',
         
         restrict: 'EA',
         scope: {

@@ -1,3 +1,18 @@
-<div class="users">
-Edit Users
+<div class="users grid-block">
+
+    <zf-accordion auto-open="false" multi-open="true" class="small-12">
+        <zf-accordion-item  ng-click="show.city = true" ng-repeat="(key, user) in usersObject" title="{{user.name +': '+user.role}}">
+            {{user}}
+            <form>
+                <div ng-repeat="(fieldKey,field) in user">
+                    <label for="{{fieldKey}}">{{fieldKey}}
+                        <input id="{{fieldKey}}" type="text" ng-model="$parent.user[fieldKey]"/>
+                    </label>
+                </div>
+                <a href="" class="button" ng-click="update('users',key,user)">Update User</a>
+            </form>
+        </zf-accordion-item>
+    </zf-accordion>
+    Edit Users
+    {{usersObject}}
 </div>
