@@ -102,6 +102,7 @@ angular.module('medviz')
 						    $rootScope.name = data.name;
 						    $rootScope.email = data.email;
 						    $rootScope.role = data.role;
+						    $rootScope.id = id;
 					    });
 				    },
 				    function(error) {
