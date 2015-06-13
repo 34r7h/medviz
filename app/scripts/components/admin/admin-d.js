@@ -7,7 +7,7 @@
 * # admin
 */
 angular.module('medviz')
-.directive('admin', function ()
+.directive('admin', function (Api)
 {
     return {
         templateUrl: 'scripts/components/admin/admin-d.html',
@@ -22,7 +22,7 @@ angular.module('medviz')
         },
         controller: function ($scope, Admin)
         {
-
+            $scope.Api = Api;
         }
     };
 });

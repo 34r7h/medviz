@@ -20,7 +20,8 @@ angular.module('medviz')
         },
         controller: function ($scope)
         {
-
+            $scope.newVisit = Api.newVisit;
+            $scope.authCheck = Api.authCheck;
         }
     };
 });

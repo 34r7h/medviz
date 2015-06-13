@@ -1,5 +1,5 @@
 <div class="auth grid-block" ng-init="auth.show = 'signIn'">
-    <p class="grid-content small-12">Please
+    <p class="grid-content small-12" ng-hide="$root.role">Please
         <a href ng-click="auth.show = 'signIn'" ng-show="auth.show !== 'signIn'"> sign-in </a>
         <b ng-show="auth.show === 'signIn'"> sign-in </b>
         or

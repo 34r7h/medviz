@@ -28,6 +28,7 @@ angular.module('medviz')
 
             $scope.doctorsIndex = Data.ref.child('index/doctors');
             $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
+
             $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
 
             $scope.newVisit = Api.newVisit;

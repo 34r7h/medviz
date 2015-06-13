@@ -25,6 +25,7 @@ angular.module('medviz')
                 } else {
                     console.log("Successfully created user account with uid:", userData.uid);
                     console.log(userData);
+	                  login(email, password);
 
                     var addUser = ref.child('users');
 	                  var addUserIndex = ref.child('index/users');
@@ -66,9 +67,9 @@ angular.module('medviz')
 					    $rootScope.role = Data.dataObject.users[id].role;
 					    $rootScope.auth = {authData:authData, id:id, role:Data.dataObject.users[id].role};
 				    });
-				    if($rootScope.auth.role === 'rep'){
+				    if($rootScope.role === 'rep'){
 					    $state.go('medviz.client');
-				    } else if ($rootScope.auth.role === 'customer') {
+				    } else if ($rootScope.role === 'admin') {
 					    $state.go('medviz.admin')
 				    } else {
 					    $state.reload();
@@ -76,24 +77,41 @@ angular.module('medviz')
 			    }
 		    });
 	    }
-	    function logout(){ref.unauth();$state.go($state.current, {}, {reload: true});}
+	    function logout(){ref.unauth(); $rootScope.role = false; $state.go($state.current, {}, {reload: true});}
 	    function authCheck(){
+		    console.log('/////////////  Checking Auth');
 		    var getAuth = $firebaseAuth(Data.ref);
 		    if(getAuth.$getAuth() !== null){
-			    console.log('signed in as', getAuth.$getAuth());
-			    var uid = getAuth.$getAuth();
-			    uid = uid.uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+			    console.log('signed in as', getAuth.$getAuth().auth.uid);
+			    var auth = getAuth.$getAuth();
+			    console.log('auth',auth);
+			    var uid = auth.uid.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+
 			    var userIndexRef = Data.ref.child('index/users/uid/'+uid);
 			    var userIndexArray = $firebaseArray(userIndexRef);
 			    var userIndexObject = $firebaseObject(userIndexRef);
-			    console.log(userIndexArray, userIndexObject);
-			    var realId = '';
-			    angular.forEach(userIndexObject, function(key, id){
-				    realId = id;
-				    $rootScope.auth = realId;
-				    return realId;
-			    });
+			    userIndexArray.$loaded(
+				    function(data) {
+					    var id = userIndexArray[0].$value;
+					    console.log(id,'id');
+					    var userRef = Data.ref.child('users/'+id);
+					    console.log('userRef',userRef);
+					    var userObject = $firebaseObject(userRef);
+					    userObject.$loaded(function(data){
+						    console.log('userObject',data.role);
+						    $rootScope.name = data.name;
+						    $rootScope.email = data.email;
+						    $rootScope.role = data.role;
+					    });
+				    },
+				    function(error) {
+					    console.error("Error:", error);
+				    }
+			    );
+
 		    }
+		    console.log('/////////////  Done Checking Auth');
+
 	    }
 
 

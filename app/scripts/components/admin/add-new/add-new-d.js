@@ -10,7 +10,7 @@ angular.module('medviz')
 .directive('addNew', function (Api, Data)
 {
     return {
-        templateUrl: 'scripts/components/admin/add-new/add-new-d.html',
+        templateUrl: '/scripts/components/admin/add-new/add-new-d.html',
         
         restrict: 'EA',
         scope: {
