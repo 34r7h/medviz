@@ -5,7 +5,7 @@
         <span class="right">
             <button class="secondary button" ng-click="logout();$root.role=false" ng-show="$root.role">Logout</button>
             <button ng-hide="$root.role" class="secondary button" ng-click="show.login =! show.login">Log In</button>
-            <div ng-style="{position:'fixed', right:0, top:0, zIndex:9999}" ng-show="show.login">
+            <div ng-style="{position:'fixed', right:'1%', top:'1%', zIndex:9999}" ng-show="show.login">
                 <sign-in></sign-in>
             </div>
         </span>

@@ -7,7 +7,7 @@
 * # visit
 */
 angular.module('medviz')
-.directive('visit', function (Api)
+.directive('visit', function (Api, Data)
 {
     return {
         templateUrl: 'scripts/components/client/visit/visit-d.html',
@@ -20,8 +20,10 @@ angular.module('medviz')
         },
         controller: function ($scope)
         {
-            $scope.newVisit = Api.newVisit;
+            $scope.newVisit = Api.create;
             $scope.authCheck = Api.authCheck;
+            $scope.newModels = Data.newModels;
+            $scope.time = Date.now();
         }
     };
 });

@@ -77,7 +77,9 @@ angular.module('medviz')
 			    }
 		    });
 	    }
-	    function logout(){ref.unauth(); $rootScope.role = false; $state.go($state.current, {}, {reload: true});}
+	    function logout(){ref.unauth(); $rootScope.role = null; $state.go($state.current, {}, {reload: true});}
+
+
 	    function authCheck(){
 		    console.log('/////////////  Checking Auth');
 		    var getAuth = $firebaseAuth(Data.ref);
