@@ -6,7 +6,7 @@
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Admin', function (Firebase, Data, $firebaseObject, $firebaseArray)
+    .factory('Admin', function (Firebase, Data, $firebaseObject, $firebaseArray, $window, $rootScope, $timeout)
     {
         'use strict';
 
@@ -15,23 +15,54 @@ angular.module('medviz')
         var dataRef = Data.ref;
         var dataArray = $firebaseArray(dataRef);
         console.log('Admin Factory Injected With: ',arguments);
+        var cLoc;
+        $timeout(function(){
+            var geolocation = $window.navigator.geolocation;
+            geolocation = geolocation.getCurrentPosition(function(position){
+                cLoc = [position.coords.latitude, position.coords.longitude];
+                console.log('position', cLoc);
+                $rootScope.loc = cLoc;
+            });
+            console.log('geolocation',cLoc);
+            console.log('geolocation2',geolocation);
+        },1000);
+
+        var cTime = Date.now();
+
+        function cleanString(str){
+            var cleanStr = str.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+            return cleanStr;
+        }
 
         function create(type, props){
+            console.log('///////////////// Creating '+ type + ' Entry', props);
+            props.location = {latitude:$rootScope.loc[0],longitude:$rootScope.loc[1]};
+            props.time = cTime;
+            console.log('props',props);
             var createRef = dataRef.child(type);
-            var uploadIndexRef = dataRef.child('index/'+type);
+            var updateIndexRef = dataRef.child('index/'+type);
             var createArray = $firebaseArray(createRef);
-            var uploadIndexData = $firebaseArray(uploadIndexRef);
+            var updateIndexData = $firebaseArray(updateIndexRef);
             createArray.$add(props).then(function(ref) {
                 var id = ref.key();
                 console.log("added record with id " + id);
                 angular.forEach(props, function(prop, key){
+                    console.log(key, prop);
                     if(prop && prop.length>2){
-                        var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
-                        uploadIndexRef.child(key+'/'+cleanProp).push(id);
+                        var cleanProp = cleanString(prop);
+                        var updateIndex = updateIndexRef.child(key+'/'+cleanProp);
+                        var createObject = $firebaseObject(updateIndex);
+                        createObject[id]=true;
+                        console.log('createObject',createObject);
+                        createObject.$save().then(function(ref) {
+                            console.log('ref',ref); // true
+                        });
+                        //updateIndexRef.child(key+'/'+cleanProp).push(id);
                     }
                 });
+                console.log('//////////////// end create '+type+' entry');
+
             });
-            // TODO add to index
         }
         // ('doctors', newDoc);
 	    // TODO refactor for all types, currently just doctors..
@@ -87,8 +118,12 @@ angular.module('medviz')
             });
             var updateRef = dataRef.child(type);
             updateRef = updateRef.child(id);
-            var uploadIndexRef = dataRef.child('index/'+type);
+            var updateIndexRef = dataRef.child('index/'+type);
             var updateObject = $firebaseObject(updateRef);
+            var updateIndexRefObject = $firebaseObject(updateIndexRef);
+
+            console.log('updateIndexRefObject',updateIndexRefObject);
+            console.log('updateObject',updateObject);
             updateObject.$value = ob;
             updateObject.$save().then(function(ref) {
                 var id = ref.key();
@@ -96,17 +131,24 @@ angular.module('medviz')
                 angular.forEach(ob, function(prop, key){
                     if(prop && prop.length>2){
                         console.log('prop',prop);
-                        var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
-                        uploadIndexRef.child(key+'/'+cleanProp).push(id);
-                        console.log('original index: ', oIndex[key]);
-                        if(prop !== oIndex[key]){
-                            console.log('indexed things to erase',key, oIndex[key]);
-                            console.log('indexed place to erase',uploadIndexRef.child(key + '/' + oIndex[key]));
-                            var removeOldIndex = uploadIndexRef.child(key+'/'+oIndex[key]);
-                            var removeObject = $firebaseObject(removeOldIndex);
-                            removeObject.$remove();
+                        var cleanProp = cleanString(prop);
+                        var updateIndex = updateIndexRef.child(key+'/'+cleanProp);
+                        var createObject = $firebaseObject(updateIndex);
+                        createObject[id]=true;
 
-                        }
+                        createObject.$save().then(function(ref) {
+                            console.log('ref key',ref.key());
+                            console.log('original index: ', oIndex[key]);
+                            if(prop !== oIndex[key]){
+                                console.log('indexed things to erase',key, oIndex[key]);
+                                console.log('indexed place to erase',updateIndexRef.child(key + '/' + oIndex[key]));
+                                var removeOldIndex = updateIndexRef.child(key+'/'+oIndex[key]);
+                                var removeObject = $firebaseObject(removeOldIndex);
+                                removeObject.$remove();
+
+                            }
+                        });
+
                     }
                 });
             });

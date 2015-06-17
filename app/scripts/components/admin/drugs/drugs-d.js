@@ -7,7 +7,7 @@
 * # drugs
 */
 angular.module('medviz')
-.directive('drugs', function (Data, $firebaseObject, $firebaseArray)
+.directive('drugs', function (Api, Data, $firebaseObject, $firebaseArray)
 {
     return {
         templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
@@ -29,6 +29,8 @@ angular.module('medviz')
             $scope.drugsIndex = Data.ref.child('index/drugs');
             $scope.drugsIndexObject = $firebaseObject($scope.drugsIndex);
             $scope.drugsIndexArray = $firebaseArray($scope.drugsIndex);
+
+            $scope.update = Api.update;
         }
     };
 });

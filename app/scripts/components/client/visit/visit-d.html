@@ -1,24 +1,35 @@
 <div class="visit" xmlns="http://www.w3.org/1999/html">
     <form ng-init="addNewKey='visits'">
-        <div ng-repeat="(key,props) in newModels[addNewKey]" ng-hide="key==='time'||key==='doctor'||key==='rep'">
-            <div ng-show="$parent.newModels[$parent.addNewKey][key].type !== 'multi-select'">
+        <div ng-repeat="(key,props) in newModels[addNewKey]" ng-hide="key==='time'||key==='doctor'||key==='rep'||key==='location'">
+            <div ng-show="$parent.newModels[$parent.addNewKey][key].type === 'text' || $parent.newModels[$parent.addNewKey][key].type === 'number'">
                 <label for="{{key}}">{{key}}</label>
                 <input
                         id="{{key}}"
                         ng-model="$parent.addNewModels[$parent.addNewKey][key]"
                         type="{{$parent.newModels[$parent.addNewKey][key].type}}"/>
             </div>
+            <div ng-show="$parent.newModels[$parent.addNewKey][key].type === 'textarea'">
+                <label for="{{key}}">{{key}}</label>
+                <textarea
+                        id="{{key}}"
+                        ng-model="$parent.addNewModels[$parent.addNewKey][key]"></textarea>
+            </div>
             <div ng-show="$parent.newModels[$parent.addNewKey][key].type === 'multi-select'">
                 <label for="{{key}}">{{key}}</label>
-                <div ng-repeat="(sub_key, val) in $parent.newModels[$parent.addNewKey][key].val">
+                <div ng-repeat="(sub_key, val) in $parent.newModels[$parent.addNewKey][key].val | orderBy:'val.priority'">
                     <label for="{{sub_key}}">{{sub_key}}</label>
                     <input
                             id="{{sub_key}}"
                             ng-model="$parent.$parent.addNewModels[$parent.$parent.addNewKey][$parent.key][sub_key]"
-                            type="{{$parent.$parent.newModels[$parent.$parent.addNewKey][$parent.key][sub_key].type}}"/></div>
+                            type="{{val.type}}"/></div>
             </div>
         </div>
-        <a ng-init="addNewModels[addNewKey].doctor=$parent.$parent.doctor; addNewModels[addNewKey].time=time;addNewModels[addNewKey].rep=$root.id" ng-click="newVisit(addNewKey,addNewModels[addNewKey]); addNewModels={}; refreshAddNewModel(newModels[addNewKey],addNewModels[addNewKey]);" href="" class="button">Submit New {{addNewKey}}</a>
+        <a
+            ng-init="addNewModels[addNewKey].doctor=$parent.$parent.doctor;
+                addNewModels[addNewKey].rep=$root.id"
+            ng-click="newVisit(addNewKey,addNewModels[addNewKey]); addNewModels={}; refreshAddNewModel(newModels[addNewKey],addNewModels[addNewKey]);"
+            href=""
+            class="button">Submit New {{addNewKey}}</a>
     </form>
     <!--<input type="text" ng-model="drugs"/>
     <textarea type="text" ng-model="notes"></textarea>

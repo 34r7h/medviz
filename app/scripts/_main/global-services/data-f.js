@@ -23,10 +23,14 @@ angular.module('medviz')
             time:{val: Date.now(),type:'number'},
             rep:{val:'',type:'text'},
             doctor:{val:'',type:'text'},
+            notes:{val:'',type:'textarea'},
             drugs:{
               type:'multi-select',
-              val:{name:{val:'', type:'text'},amount:{val:0,type:'number'}}},
-            location:{val:'', type:'text'}},
+              val:{drug:{val:'', type:'text'}, form:{val:'', type:'text'},qty:{val:0,type:'number'},units:{val:'', type:'text'}}},
+            location:{
+              type:'multi-select',
+              val:{latitude:{val:0, type:'number'}}, longitude:{val:0, type:'number'}}
+            },
           doctors:{
             address:{val:'',type:'text'},
             city:{val:'',type:'text'},

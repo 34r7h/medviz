@@ -122,10 +122,14 @@ angular.module('medviz')
             time:{val: Date.now(),type:'number'},
             rep:{val:'',type:'text'},
             doctor:{val:'',type:'text'},
+            notes:{val:'',type:'textarea'},
             drugs:{
               type:'multi-select',
-              val:{name:{val:'', type:'text'},amount:{val:0,type:'number'}}},
-            location:{val:'', type:'text'}},
+              val:{drug:{val:'', type:'text'}, form:{val:'', type:'text'},qty:{val:0,type:'number'},units:{val:'', type:'text'}}},
+            location:{
+              type:'multi-select',
+              val:{latitude:{val:0, type:'number'}}, longitude:{val:0, type:'number'}}
+            },
           doctors:{
             address:{val:'',type:'text'},
             city:{val:'',type:'text'},
@@ -189,7 +193,7 @@ angular.module('medviz')
  * Factory in the medviz.
  */
 angular.module('medviz')
-    .factory('Admin', ["Firebase", "Data", "$firebaseObject", "$firebaseArray", function (Firebase, Data, $firebaseObject, $firebaseArray)
+    .factory('Admin', ["Firebase", "Data", "$firebaseObject", "$firebaseArray", "$window", "$rootScope", "$timeout", function (Firebase, Data, $firebaseObject, $firebaseArray, $window, $rootScope, $timeout)
     {
         'use strict';
 
@@ -198,23 +202,54 @@ angular.module('medviz')
         var dataRef = Data.ref;
         var dataArray = $firebaseArray(dataRef);
         console.log('Admin Factory Injected With: ',arguments);
+        var cLoc;
+        $timeout(function(){
+            var geolocation = $window.navigator.geolocation;
+            geolocation = geolocation.getCurrentPosition(function(position){
+                cLoc = [position.coords.latitude, position.coords.longitude];
+                console.log('position', cLoc);
+                $rootScope.loc = cLoc;
+            });
+            console.log('geolocation',cLoc);
+            console.log('geolocation2',geolocation);
+        },1000);
+
+        var cTime = Date.now();
+
+        function cleanString(str){
+            var cleanStr = str.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
+            return cleanStr;
+        }
 
         function create(type, props){
+            console.log('///////////////// Creating '+ type + ' Entry', props);
+            props.location = {latitude:$rootScope.loc[0],longitude:$rootScope.loc[1]};
+            props.time = cTime;
+            console.log('props',props);
             var createRef = dataRef.child(type);
-            var uploadIndexRef = dataRef.child('index/'+type);
+            var updateIndexRef = dataRef.child('index/'+type);
             var createArray = $firebaseArray(createRef);
-            var uploadIndexData = $firebaseArray(uploadIndexRef);
+            var updateIndexData = $firebaseArray(updateIndexRef);
             createArray.$add(props).then(function(ref) {
                 var id = ref.key();
                 console.log("added record with id " + id);
                 angular.forEach(props, function(prop, key){
+                    console.log(key, prop);
                     if(prop && prop.length>2){
-                        var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
-                        uploadIndexRef.child(key+'/'+cleanProp).push(id);
+                        var cleanProp = cleanString(prop);
+                        var updateIndex = updateIndexRef.child(key+'/'+cleanProp);
+                        var createObject = $firebaseObject(updateIndex);
+                        createObject[id]=true;
+                        console.log('createObject',createObject);
+                        createObject.$save().then(function(ref) {
+                            console.log('ref',ref); // true
+                        });
+                        //updateIndexRef.child(key+'/'+cleanProp).push(id);
                     }
                 });
+                console.log('//////////////// end create '+type+' entry');
+
             });
-            // TODO add to index
         }
         // ('doctors', newDoc);
 	    // TODO refactor for all types, currently just doctors..
@@ -270,8 +305,12 @@ angular.module('medviz')
             });
             var updateRef = dataRef.child(type);
             updateRef = updateRef.child(id);
-            var uploadIndexRef = dataRef.child('index/'+type);
+            var updateIndexRef = dataRef.child('index/'+type);
             var updateObject = $firebaseObject(updateRef);
+            var updateIndexRefObject = $firebaseObject(updateIndexRef);
+
+            console.log('updateIndexRefObject',updateIndexRefObject);
+            console.log('updateObject',updateObject);
             updateObject.$value = ob;
             updateObject.$save().then(function(ref) {
                 var id = ref.key();
@@ -279,17 +318,24 @@ angular.module('medviz')
                 angular.forEach(ob, function(prop, key){
                     if(prop && prop.length>2){
                         console.log('prop',prop);
-                        var cleanProp = prop.toLowerCase().replace(/'+/g, '').replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '');
-                        uploadIndexRef.child(key+'/'+cleanProp).push(id);
-                        console.log('original index: ', oIndex[key]);
-                        if(prop !== oIndex[key]){
-                            console.log('indexed things to erase',key, oIndex[key]);
-                            console.log('indexed place to erase',uploadIndexRef.child(key + '/' + oIndex[key]));
-                            var removeOldIndex = uploadIndexRef.child(key+'/'+oIndex[key]);
-                            var removeObject = $firebaseObject(removeOldIndex);
-                            removeObject.$remove();
+                        var cleanProp = cleanString(prop);
+                        var updateIndex = updateIndexRef.child(key+'/'+cleanProp);
+                        var createObject = $firebaseObject(updateIndex);
+                        createObject[id]=true;
 
-                        }
+                        createObject.$save().then(function(ref) {
+                            console.log('ref key',ref.key());
+                            console.log('original index: ', oIndex[key]);
+                            if(prop !== oIndex[key]){
+                                console.log('indexed things to erase',key, oIndex[key]);
+                                console.log('indexed place to erase',updateIndexRef.child(key + '/' + oIndex[key]));
+                                var removeOldIndex = updateIndexRef.child(key+'/'+oIndex[key]);
+                                var removeObject = $firebaseObject(removeOldIndex);
+                                removeObject.$remove();
+
+                            }
+                        });
+
                     }
                 });
             });
@@ -316,48 +362,6 @@ angular.module('medviz')
 
         return service;
     }]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:landing
-* @description
-* # landing
-*/
-angular.module('medviz')
-.directive('landing', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/landing-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Landing", function ($scope, Landing)
-        {
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Landing
- * @description
- * # Landing
- * Service in the medviz.
- */
-angular.module('medviz')
-    .service('Landing', function ()
-    {
-        'use strict';
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
 'use strict';
 
 /**
@@ -434,15 +438,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:users
+* @name medviz.directive:landing
 * @description
-* # users
+* # landing
 */
 angular.module('medviz')
-.directive('users', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
+.directive('landing', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/users/users-d.html',
+        templateUrl: 'scripts/components/landing/landing-d.html',
         
         restrict: 'EA',
         scope: {
@@ -452,33 +456,39 @@ angular.module('medviz')
         {
 
         },
-        controller: ["$scope", function ($scope)
+        controller: ["$scope", "Landing", function ($scope, Landing)
         {
-            $scope.users = Data.ref.child('users');
-            $scope.usersObject = $firebaseObject($scope.users);
-            $scope.usersArray = $firebaseArray($scope.users);
 
-            $scope.usersIndex = Data.ref.child('index/users');
-            $scope.usersIndexObject = $firebaseObject($scope.usersIndex);
-            $scope.usersIndexArray = $firebaseArray($scope.usersIndex);
-
-            $scope.update = Api.update;
         }]
     };
-}]);
+});
+/**
+ * @ngdoc service
+ * @name medviz.Landing
+ * @description
+ * # Landing
+ * Service in the medviz.
+ */
+angular.module('medviz')
+    .service('Landing', function ()
+    {
+        'use strict';
+
+        // AngularJS will instantiate a singleton by calling "new" on this function
+    });
 'use strict';
 
 /**
 * @ngdoc directive
-* @name medviz.directive:drugs
+* @name medviz.directive:addNew
 * @description
-* # drugs
+* # addNew
 */
 angular.module('medviz')
-.directive('drugs', ["Data", "$firebaseObject", "$firebaseArray", function (Data, $firebaseObject, $firebaseArray)
+.directive('addNew', ["Api", "Data", function (Api, Data)
 {
     return {
-        templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
+        templateUrl: '/scripts/components/admin/add-new/add-new-d.html',
         
         restrict: 'EA',
         scope: {
@@ -490,13 +500,11 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.drugs = Data.ref.child('drugs');
-            $scope.drugsObject = $firebaseObject($scope.drugs);
-            $scope.drugsArray = $firebaseArray($scope.drugs);
-    
-            $scope.drugsIndex = Data.ref.child('index/drugs');
-            $scope.drugsIndexObject = $firebaseObject($scope.drugsIndex);
-            $scope.drugsIndexArray = $firebaseArray($scope.drugsIndex);
+            $scope.newModels = Data.newModels;
+            $scope.createEntry = Api.create;
+            $scope.addNewModels = {};
+            Api.refreshAddNewModel($scope.newModels, $scope.addNewModels);
+            $scope.refreshAddNewModel = Api.refreshAddNewModel;
         }]
     };
 }]);
@@ -538,15 +546,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:addNew
+* @name medviz.directive:drugs
 * @description
-* # addNew
+* # drugs
 */
 angular.module('medviz')
-.directive('addNew', ["Api", "Data", function (Api, Data)
+.directive('drugs', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
 {
     return {
-        templateUrl: '/scripts/components/admin/add-new/add-new-d.html',
+        templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
         
         restrict: 'EA',
         scope: {
@@ -558,11 +566,15 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.newModels = Data.newModels;
-            $scope.createEntry = Api.create;
-            $scope.addNewModels = {};
-            Api.refreshAddNewModel($scope.newModels, $scope.addNewModels);
-            $scope.refreshAddNewModel = Api.refreshAddNewModel;
+            $scope.drugs = Data.ref.child('drugs');
+            $scope.drugsObject = $firebaseObject($scope.drugs);
+            $scope.drugsArray = $firebaseArray($scope.drugs);
+    
+            $scope.drugsIndex = Data.ref.child('index/drugs');
+            $scope.drugsIndexObject = $firebaseObject($scope.drugsIndex);
+            $scope.drugsIndexArray = $firebaseArray($scope.drugsIndex);
+
+            $scope.update = Api.update;
         }]
     };
 }]);
@@ -570,15 +582,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:features
+* @name medviz.directive:users
 * @description
-* # features
+* # users
 */
 angular.module('medviz')
-.directive('features', function ()
+.directive('users', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
 {
     return {
-        templateUrl: 'scripts/components/landing/features/features-d.html',
+        templateUrl: 'scripts/components/admin/users/users-d.html',
         
         restrict: 'EA',
         scope: {
@@ -590,38 +602,18 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
+            $scope.users = Data.ref.child('users');
+            $scope.usersObject = $firebaseObject($scope.users);
+            $scope.usersArray = $firebaseArray($scope.users);
 
+            $scope.usersIndex = Data.ref.child('index/users');
+            $scope.usersIndexObject = $firebaseObject($scope.usersIndex);
+            $scope.usersIndexArray = $firebaseArray($scope.usersIndex);
+
+            $scope.update = Api.update;
         }]
     };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:testimonials
-* @description
-* # testimonials
-*/
-angular.module('medviz')
-.directive('testimonials', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
+}]);
 'use strict';
 
 /**
@@ -649,6 +641,13 @@ angular.module('medviz')
             $scope.visits = Data.ref.child('visits');
             $scope.visitsObject = $firebaseObject($scope.visits);
             $scope.visitsArray = $firebaseArray($scope.visits);
+            console.log('visits dataObject',Data.dataObject);
+            $scope.userRef = function(id){
+                return Data.dataObject.users[id].name;
+            };
+            $scope.doctorRef = function(id){
+                return Data.dataObject.doctors[id]['doctor name'];
+            };
     
             $scope.visitsIndex = Data.ref.child('index/visits');
             $scope.visitsIndexObject = $firebaseObject($scope.visitsIndex);
@@ -656,34 +655,6 @@ angular.module('medviz')
         }]
     };
 }]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:fold
-* @description
-* # fold
-*/
-angular.module('medviz')
-.directive('fold', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
@@ -754,30 +725,32 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizFooter
+* @name medviz.directive:visit
 * @description
-* # medvizFooter
+* # visit
 */
 angular.module('medviz')
-.directive('medvizFooter', function ()
+.directive('visit', ["Api", "Data", "$window", function (Api, Data, $window)
 {
     return {
-        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
+        templateUrl: 'scripts/components/client/visit/visit-d.html',
         
         restrict: 'EA',
-        scope: {
 
-        },
         link: function (scope, el, attrs)
         {
 
         },
         controller: ["$scope", function ($scope)
         {
+            $scope.newVisit = Api.create;
+            $scope.authCheck = Api.authCheck;
+            $scope.newModels = Data.newModels;
+
 
         }]
     };
-});
+}]);
 'use strict';
 
 /**
@@ -942,18 +915,104 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:medvizNav
+* @name medviz.directive:features
 * @description
-* # medvizNav
+* # features
 */
 angular.module('medviz')
-.directive('medvizNav', function ()
+.directive('features', function ()
 {
     return {
-        templateUrl: 'scripts/components/layout/medviz-nav/medviz-nav-d.html',
+        templateUrl: 'scripts/components/landing/features/features-d.html',
         
         restrict: 'EA',
+        scope: {
 
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:fold
+* @description
+* # fold
+*/
+angular.module('medviz')
+.directive('fold', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:testimonials
+* @description
+* # testimonials
+*/
+angular.module('medviz')
+.directive('testimonials', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:medvizFooter
+* @description
+* # medvizFooter
+*/
+angular.module('medviz')
+.directive('medvizFooter', function ()
+{
+    return {
+        templateUrl: 'scripts/components/layout/medviz-footer/medviz-footer-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
         link: function (scope, el, attrs)
         {
 
@@ -993,15 +1052,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:visit
+* @name medviz.directive:medvizNav
 * @description
-* # visit
+* # medvizNav
 */
 angular.module('medviz')
-.directive('visit', ["Api", "Data", function (Api, Data)
+.directive('medvizNav', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/visit/visit-d.html',
+        templateUrl: 'scripts/components/layout/medviz-nav/medviz-nav-d.html',
         
         restrict: 'EA',
 
@@ -1011,13 +1070,10 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.newVisit = Api.create;
-            $scope.authCheck = Api.authCheck;
-            $scope.newModels = Data.newModels;
-            $scope.time = Date.now();
+
         }]
     };
-}]);
+});
 'use strict';
 
 /**
