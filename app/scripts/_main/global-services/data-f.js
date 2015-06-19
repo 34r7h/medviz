@@ -18,7 +18,11 @@ angular.module('medviz')
           users:{
             email:{val:'',type:'email'},
             name:{val:'', type:'text'},
-            role:{val:'',type:'text'}},
+            role:{val:'',type:'text'},
+            agenda:{val:{
+              schedule:{},
+              tasks:{}
+            }, type:'multi'}},
           visits:{
             time:{val: Date.now(),type:'number'},
             rep:{val:'',type:'text'},
