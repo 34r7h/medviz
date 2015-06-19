@@ -1,10 +1,10 @@
 <div class="doctors grid-content" ng-init="">
     <h2>Doctors</h2>
-    <zf-accordion auto-open="false" multi-open="true">
+    <zf-accordion auto-open="false" multi-open="true" ng-init="show.max=5">
        <!-- <zf-accordion-item  ng-click="show.city = true" ng-repeat="(city, doctors) in doctorsIndexObject.city" title="{{city}}">-->
-        <zf-accordion-item  ng-click="show.municipality = true" ng-repeat="(municipality, doctors) in doctorsIndexObject.municipality" title="{{municipality}}">
+        <zf-accordion-item ng-click="show.municipality = true" ng-repeat="(municipality, doctors) in doctorsIndexObject.municipality" title="{{municipality}}" ng-if="$index<show.max">
             <zf-accordion ng-if="show.municipality" auto-open="false">
-                <zf-accordion-item ng-repeat="doctor in doctors | orderBy:doctors.city" title="{{doctorsObject[doctor]['doctor name']}}, {{doctorsObject[doctor].speciality}}">
+                <zf-accordion-item ng-if="$index < show.max" ng-repeat="doctor in doctors | orderBy:doctors.city" title="{{doctorsObject[doctor]['doctor name']}}, {{doctorsObject[doctor].speciality}}">
                     <div>
                         <b>{{doctorsObject[doctor]['doctor name']}}</b>
                         <b>{{doctorsObject[doctor].address}}</b>
@@ -18,5 +18,5 @@
             </zf-accordion>
         </zf-accordion-item>
     </zf-accordion>
-
+    <div class="button" ng-click="show.max=show.max*2">Add more</div>
 </div>

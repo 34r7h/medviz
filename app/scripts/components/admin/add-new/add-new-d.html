@@ -1,4 +1,4 @@
-<div class="add-new" ng-init="addNew.show=''; addNewKey=''">
+<div class="add-new" ng-init="addNew.show='drugs'; addNewKey='drugs'">
     <ul class="menu-bar dark small-12">
         <li ng-click="$parent.addNew.show='';$parent.addNew.show=key; $parent.addNewKey=key" ng-repeat="(key, val) in newModels">
             <a ng-show="$parent.addNew.show!==key">{{key | uppercase}}</a>
