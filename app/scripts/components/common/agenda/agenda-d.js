@@ -16,10 +16,6 @@ angular.module('medviz')
         scope: {
 
         },
-        link: function (scope, el, attrs)
-        {
-
-        },
         controller: function ($scope, Agenda)
         {
 

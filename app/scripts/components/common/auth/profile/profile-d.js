@@ -23,7 +23,9 @@ angular.module('medviz')
         controller: function ($scope, Data, $rootScope, $timeout)
         {
             $timeout(function(){
-                $scope.user = Data.dataObject.users[$rootScope.id];
+                  if(Data.dataObject.users){
+                    $scope.user = Data.dataObject.users[$rootScope.id];
+                  }
               }, 3000
             );
         }

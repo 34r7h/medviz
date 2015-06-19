@@ -33,11 +33,25 @@ IMPORTANT NOTE:
 
 @import  'placeholders/_some-placeholder.scss';
 
-@import  '../scripts/components/admin/_admin-d.scss';
-
 @import  '../scripts/components/client/_client-d.scss';
 
 @import  '../scripts/components/landing/_landing-d.scss';
+
+@import  '../scripts/components/admin/_admin-d.scss';
+
+@import  '../scripts/components/client/doctor/_doctor-d.scss';
+
+@import  '../scripts/components/client/visit/_visit-d.scss';
+
+@import  '../scripts/components/landing/features/_features-d.scss';
+
+@import  '../scripts/components/landing/fold/_fold-d.scss';
+
+@import  '../scripts/components/landing/testimonials/_testimonials-d.scss';
+
+@import  '../scripts/components/common/agenda/_agenda-d.scss';
+
+@import  '../scripts/components/common/auth/_auth-d.scss';
 
 @import  '../scripts/components/admin/add-new/_add-new-d.scss';
 
@@ -48,20 +62,6 @@ IMPORTANT NOTE:
 @import  '../scripts/components/admin/users/_users-d.scss';
 
 @import  '../scripts/components/admin/visits/_visits-d.scss';
-
-@import  '../scripts/components/client/doctor/_doctor-d.scss';
-
-@import  '../scripts/components/common/agenda/_agenda-d.scss';
-
-@import  '../scripts/components/client/visit/_visit-d.scss';
-
-@import  '../scripts/components/common/auth/_auth-d.scss';
-
-@import  '../scripts/components/landing/features/_features-d.scss';
-
-@import  '../scripts/components/landing/fold/_fold-d.scss';
-
-@import  '../scripts/components/landing/testimonials/_testimonials-d.scss';
 
 @import  '../scripts/components/layout/medviz-footer/_medviz-footer-d.scss';
 

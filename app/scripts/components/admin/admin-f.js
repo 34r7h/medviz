@@ -23,8 +23,6 @@ angular.module('medviz')
                 console.log('position', cLoc);
                 $rootScope.loc = cLoc;
             });
-            console.log('geolocation',cLoc);
-            console.log('geolocation2',geolocation);
         },1000);
 
         var cTime = Date.now();

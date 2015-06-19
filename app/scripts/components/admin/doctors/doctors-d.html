@@ -1,9 +1,11 @@
 <div class="doctors grid-block">
-
-    <zf-accordion auto-open="false" multi-open="true" class="small-12">
-        <zf-accordion-item ng-click="show.city = true" ng-repeat="(key, doctor) in doctorsObject" title="{{doctor['doctor name'] +': '+doctor['speciality']}}">
+    {{show.citySearch}}
+    <zf-accordion auto-open="false" multi-open="true" class="small-12" ng-init="show.maxDoctors=5">
+        <input type="text" ng-model="show.searchCity" placeholder="Search"/>
+        <input type="text" ng-model="show.searchName" placeholder="Search"/>
+        <input type="text" ng-model="show.searchSpeciality" placeholder="Search"/>
+        <zf-accordion-item ng-if="$index < show.maxDoctors" ng-click="show.city = true" ng-repeat="(key, doctor) in doctorsArray | filter:{city: show.searchCity, 'doctor name': show.searchName, speciality: show.searchSpeciality}" title="{{doctor['doctor name'] +': '+doctor['speciality']}}">
             <form ng-if="show.city">
-                {{doctor}}
                 <div ng-repeat="(fieldKey,field) in doctor">
                     <label for="{{fieldKey}}">{{fieldKey}}
                         <input id="{{fieldKey}}" type="text" ng-model="$parent.doctor[fieldKey]"/>
@@ -11,6 +13,11 @@
                 </div>
                 <a href="" class="button" ng-click="update('doctors',key,doctor)">Update User</a>
             </form>
+            <div ng-if="$index===show.maxDoctors-1" class="button" ng-click="show.maxDoctors=show.maxDoctors*2">Add more</div>
+
         </zf-accordion-item>
+        <div class="button" ng-click="show.maxDoctors=show.maxDoctors*2">Add more</div>
+
     </zf-accordion>
+    <div class="button" ng-click="show.maxDoctors=show.maxDoctors*2">Add more</div>
 </div>
