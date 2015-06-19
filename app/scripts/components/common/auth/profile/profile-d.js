@@ -20,9 +20,12 @@ angular.module('medviz')
         {
 
         },
-        controller: function ($scope)
+        controller: function ($scope, Data, $rootScope, $timeout)
         {
-
+            $timeout(function(){
+                $scope.user = Data.dataObject.users[$rootScope.id];
+              }, 3000
+            );
         }
     };
 });

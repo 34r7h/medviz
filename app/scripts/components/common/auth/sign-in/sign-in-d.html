@@ -1,6 +1,7 @@
 <div class="sign-in card">
     <div class="card-divider" ng-show="$root.role">
         <button class="secondary button" ng-click="logout();$root.role=false">Logout</button>
+        <button class="secondary button empty" ng-click="show.login = false" >Cancel</button>
         <profile></profile>
     </div>
     <div class="card-divider" ng-hide="$root.role">
@@ -22,7 +23,7 @@
                     <input ng-model="$parent[inputs.name]" type="{{inputs.type}}">
                     </span>
                 </label>
-                <button ng-show="show.login" class="button hollow" ng-click="show.login =! show.login">Cancel</button>
+
                 <button form="signin" type="submit" class="button" value="Submit" ng-click="login(email,password);">Sign in</button>
             </div>
         </form>

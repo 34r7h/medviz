@@ -22,7 +22,7 @@ angular.module('medviz')
         },
         controller: function ($scope)
         {
-            $scope.doctors = Data.ref.child('doctors').limitToFirst(10);
+            $scope.doctors = Data.ref.child('doctors').limitToFirst(1000);
             $scope.doctorsObject = $firebaseObject($scope.doctors);
             $scope.doctorsArray = $firebaseArray($scope.doctors);
 
