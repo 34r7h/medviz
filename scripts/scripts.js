@@ -138,48 +138,6 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:landing
-* @description
-* # landing
-*/
-angular.module('medviz')
-.directive('landing', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/landing-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Landing", function ($scope, Landing)
-        {
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Landing
- * @description
- * # Landing
- * Service in the medviz.
- */
-angular.module('medviz')
-    .service('Landing', function ()
-    {
-        'use strict';
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
-'use strict';
-
-/**
-* @ngdoc directive
 * @name medviz.directive:admin
 * @description
 * # admin
@@ -434,6 +392,7 @@ angular.module('medviz')
             email:{val:'',type:'email'},
             name:{val:'', type:'text'},
             role:{val:'',type:'text'},
+            company:{val:'',type:'text'},
             agenda:{val:{
               schedule:{},
               tasks:{}
@@ -481,15 +440,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:doctors
+* @name medviz.directive:landing
 * @description
-* # doctors
+* # landing
 */
 angular.module('medviz')
-.directive('doctor', function ()
+.directive('landing', function ()
 {
     return {
-        templateUrl: 'scripts/components/client/doctor/doctor-d.html',
+        templateUrl: 'scripts/components/landing/landing-d.html',
         
         restrict: 'EA',
         scope: {
@@ -499,21 +458,26 @@ angular.module('medviz')
         {
 
         },
-        controller: ["$scope", "Data", "$firebaseObject", "$firebaseArray", "Api", function ($scope, Data, $firebaseObject, $firebaseArray, Api)
+        controller: ["$scope", "Landing", function ($scope, Landing)
         {
-            $scope.doctors = Data.ref.child('doctors');
-            $scope.doctorsObject = $firebaseObject($scope.doctors);
-            $scope.doctorsArray = $firebaseArray($scope.doctors);
 
-            $scope.doctorsIndex = Data.ref.child('index/doctors');
-            $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
-
-            $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
-
-            $scope.newVisit = Api.newVisit;
         }]
     };
 });
+/**
+ * @ngdoc service
+ * @name medviz.Landing
+ * @description
+ * # Landing
+ * Service in the medviz.
+ */
+angular.module('medviz')
+    .service('Landing', function ()
+    {
+        'use strict';
+
+        // AngularJS will instantiate a singleton by calling "new" on this function
+    });
 'use strict';
 
 /**
@@ -548,6 +512,270 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
+* @name medviz.directive:doctors
+* @description
+* # doctors
+*/
+angular.module('medviz')
+.directive('doctor', function ()
+{
+    return {
+        templateUrl: 'scripts/components/client/doctor/doctor-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Data", "$firebaseObject", "$firebaseArray", "Api", function ($scope, Data, $firebaseObject, $firebaseArray, Api)
+        {
+            $scope.doctors = Data.ref.child('doctors');
+            $scope.doctorsObject = $firebaseObject($scope.doctors);
+            $scope.doctorsArray = $firebaseArray($scope.doctors);
+
+            $scope.doctorsIndex = Data.ref.child('index/doctors');
+            $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
+            $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
+
+            $scope.newVisit = Api.newVisit;
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:doctor
+* @description
+* # doctor
+*/
+angular.module('medviz')
+.directive('doctors', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
+{
+    return {
+        templateUrl: 'scripts/components/admin/doctors/doctors-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+            $scope.doctors = Data.ref.child('doctors')/*.limitToFirst(100)*/;
+            $scope.doctorsObject = $firebaseObject($scope.doctors);
+            $scope.doctorsArray = $firebaseArray($scope.doctors);
+
+            $scope.doctorsIndex = Data.ref.child('index/doctors');
+            $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
+            $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
+        }]
+    };
+}]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:addNew
+* @description
+* # addNew
+*/
+angular.module('medviz')
+.directive('addNew', ["Api", "Data", function (Api, Data)
+{
+    return {
+        templateUrl: 'scripts/components/admin/add-new/add-new-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+            $scope.newModels = Data.newModels;
+            $scope.createEntry = Api.create;
+            $scope.addNewModels = {};
+            Api.refreshAddNewModel($scope.newModels, $scope.addNewModels);
+            $scope.refreshAddNewModel = Api.refreshAddNewModel;
+        }]
+    };
+}]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:users
+* @description
+* # users
+*/
+angular.module('medviz')
+.directive('users', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
+{
+    return {
+        templateUrl: 'scripts/components/admin/users/users-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+            $scope.users = Data.ref.child('users');
+            $scope.usersObject = $firebaseObject($scope.users);
+            $scope.usersArray = $firebaseArray($scope.users);
+
+            $scope.usersIndex = Data.ref.child('index/users');
+            $scope.usersIndexObject = $firebaseObject($scope.usersIndex);
+            $scope.usersIndexArray = $firebaseArray($scope.usersIndex);
+
+            $scope.update = Api.update;
+        }]
+    };
+}]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:drugs
+* @description
+* # drugs
+*/
+angular.module('medviz')
+.directive('drugs', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
+{
+    return {
+        templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+            $scope.drugs = Data.ref.child('drugs');
+            $scope.drugsObject = $firebaseObject($scope.drugs);
+            $scope.drugsArray = $firebaseArray($scope.drugs);
+    
+            $scope.drugsIndex = Data.ref.child('index/drugs');
+            $scope.drugsIndexObject = $firebaseObject($scope.drugsIndex);
+            $scope.drugsIndexArray = $firebaseArray($scope.drugsIndex);
+
+            $scope.update = Api.update;
+        }]
+    };
+}]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:agenda
+* @description
+* # agenda
+*/
+angular.module('medviz')
+.directive('agenda', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/agenda/agenda-d.html',
+        
+        restrict: 'EA',
+        controller: ["$scope", "$rootScope", "Agenda", "Api", "Data", "$timeout", function ($scope,  $rootScope, Agenda, Api, Data, $timeout)
+        {
+            $timeout(function(){
+                $scope.user = $rootScope.id;
+                $scope.userAgenda = Data.dataObject.users[$scope.user];
+            },3000);
+            $scope.addTask = function(task){
+                console.log('adding task', task);
+                if(!$scope.userAgenda.agenda){
+                    $scope.userAgenda.agenda = {tasks:{}};
+                }
+                $scope.userAgenda.agenda.tasks.$push(task);
+            };
+            $scope.addAppointment = function(appointment){
+                console.log('adding appointment', appointment);
+                if(!$scope.userAgenda.agenda){
+                    $scope.userAgenda.agenda = {schedule:{}}
+                }
+                $scope.userAgenda.agenda.schedule.$push(appointment);
+
+            };
+        }]
+    };
+});
+/**
+ * @ngdoc service
+ * @name medviz.Agenda
+ * @description
+ * # Agenda
+ * Service in the medviz.
+ */
+angular.module('medviz')
+    .service('Agenda', function ()
+    {
+        'use strict';
+
+        // AngularJS will instantiate a singleton by calling "new" on this function
+    });
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:visits
+* @description
+* # visits
+*/
+angular.module('medviz')
+.directive('visits', ["Data", "$firebaseObject", "$firebaseArray", function (Data, $firebaseObject, $firebaseArray)
+{
+    return {
+        templateUrl: 'scripts/components/admin/visits/visits-d.html',
+
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+            $scope.visits = Data.ref.child('visits');
+            $scope.visitsObject = $firebaseObject($scope.visits);
+            $scope.visitsArray = $firebaseArray($scope.visits);
+            console.log('visits dataObject',Data.dataObject);
+            $scope.userRef = function(id){
+                return Data.dataObject.users[id].name;
+            };
+            $scope.doctorRef = function(id){
+                return Data.dataObject.doctors[id]['doctor name'];
+            };
+    
+            $scope.visitsIndex = Data.ref.child('index/visits');
+            $scope.visitsIndexObject = $firebaseObject($scope.visitsIndex);
+            $scope.visitsIndexArray = $firebaseArray($scope.visitsIndex);
+        }]
+    };
+}]);
+'use strict';
+
+/**
+* @ngdoc directive
 * @name medviz.directive:features
 * @description
 * # features
@@ -572,100 +800,6 @@ angular.module('medviz')
         }]
     };
 });
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:fold
-* @description
-* # fold
-*/
-angular.module('medviz')
-.directive('fold', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:testimonials
-* @description
-* # testimonials
-*/
-angular.module('medviz')
-.directive('testimonials', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:agenda
-* @description
-* # agenda
-*/
-angular.module('medviz')
-.directive('agenda', function ()
-{
-    return {
-        templateUrl: 'scripts/components/common/agenda/agenda-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        controller: ["$scope", "Agenda", function ($scope, Agenda)
-        {
-
-        }]
-    };
-});
-/**
- * @ngdoc service
- * @name medviz.Agenda
- * @description
- * # Agenda
- * Service in the medviz.
- */
-angular.module('medviz')
-    .service('Agenda', function ()
-    {
-        'use strict';
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    });
 'use strict';
 
 /**
@@ -831,15 +965,15 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
-* @name medviz.directive:addNew
+* @name medviz.directive:testimonials
 * @description
-* # addNew
+* # testimonials
 */
 angular.module('medviz')
-.directive('addNew', ["Api", "Data", function (Api, Data)
+.directive('testimonials', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/add-new/add-new-d.html',
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
         
         restrict: 'EA',
         scope: {
@@ -851,57 +985,23 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.newModels = Data.newModels;
-            $scope.createEntry = Api.create;
-            $scope.addNewModels = {};
-            Api.refreshAddNewModel($scope.newModels, $scope.addNewModels);
-            $scope.refreshAddNewModel = Api.refreshAddNewModel;
+
         }]
     };
-}]);
+});
 'use strict';
 
 /**
 * @ngdoc directive
-* @name medviz.directive:doctor
+* @name medviz.directive:fold
 * @description
-* # doctor
+* # fold
 */
 angular.module('medviz')
-.directive('doctors', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
+.directive('fold', function ()
 {
     return {
-        templateUrl: 'scripts/components/admin/doctors/doctors-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-            $scope.doctors = Data.ref.child('doctors')/*.limitToFirst(100)*/;
-            $scope.doctorsObject = $firebaseObject($scope.doctors);
-            $scope.doctorsArray = $firebaseArray($scope.doctors);
-
-            $scope.doctorsIndex = Data.ref.child('index/doctors');
-            $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
-            $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
-        }]
-    };
-}]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:drugs
-* @description
-* # drugs
-*/
-angular.module('medviz')
-.directive('drugs', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
-{
-    return {
-        templateUrl: 'scripts/components/admin/drugs/drugs-d.html',
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
         
         restrict: 'EA',
         scope: {
@@ -913,95 +1013,10 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.drugs = Data.ref.child('drugs');
-            $scope.drugsObject = $firebaseObject($scope.drugs);
-            $scope.drugsArray = $firebaseArray($scope.drugs);
-    
-            $scope.drugsIndex = Data.ref.child('index/drugs');
-            $scope.drugsIndexObject = $firebaseObject($scope.drugsIndex);
-            $scope.drugsIndexArray = $firebaseArray($scope.drugsIndex);
 
-            $scope.update = Api.update;
         }]
     };
-}]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:users
-* @description
-* # users
-*/
-angular.module('medviz')
-.directive('users', ["Api", "Data", "$firebaseObject", "$firebaseArray", function (Api, Data, $firebaseObject, $firebaseArray)
-{
-    return {
-        templateUrl: 'scripts/components/admin/users/users-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-            $scope.users = Data.ref.child('users');
-            $scope.usersObject = $firebaseObject($scope.users);
-            $scope.usersArray = $firebaseArray($scope.users);
-
-            $scope.usersIndex = Data.ref.child('index/users');
-            $scope.usersIndexObject = $firebaseObject($scope.usersIndex);
-            $scope.usersIndexArray = $firebaseArray($scope.usersIndex);
-
-            $scope.update = Api.update;
-        }]
-    };
-}]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:visits
-* @description
-* # visits
-*/
-angular.module('medviz')
-.directive('visits', ["Data", "$firebaseObject", "$firebaseArray", function (Data, $firebaseObject, $firebaseArray)
-{
-    return {
-        templateUrl: 'scripts/components/admin/visits/visits-d.html',
-
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-            $scope.visits = Data.ref.child('visits');
-            $scope.visitsObject = $firebaseObject($scope.visits);
-            $scope.visitsArray = $firebaseArray($scope.visits);
-            console.log('visits dataObject',Data.dataObject);
-            $scope.userRef = function(id){
-                return Data.dataObject.users[id].name;
-            };
-            $scope.doctorRef = function(id){
-                return Data.dataObject.doctors[id]['doctor name'];
-            };
-    
-            $scope.visitsIndex = Data.ref.child('index/visits');
-            $scope.visitsIndexObject = $firebaseObject($scope.visitsIndex);
-            $scope.visitsIndexArray = $firebaseArray($scope.visitsIndex);
-        }]
-    };
-}]);
+});
 'use strict';
 
 /**
@@ -1121,6 +1136,32 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
+* @name medviz.directive:signIn
+* @description
+* # signIn
+*/
+angular.module('medviz')
+.directive('signIn', function ()
+{
+    return {
+        templateUrl: 'scripts/components/common/auth/sign-in/sign-in-d.html',
+        
+        restrict: 'EA',
+
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", "Api", function ($scope, Api)
+        {
+            $scope.login = Api.login;
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
 * @name medviz.directive:reg
 * @description
 * # reg
@@ -1142,32 +1183,6 @@ angular.module('medviz')
         controller: ["$scope", "Api", function ($scope, Api)
         {
             $scope.newUser = Api.newUser;
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:signIn
-* @description
-* # signIn
-*/
-angular.module('medviz')
-.directive('signIn', function ()
-{
-    return {
-        templateUrl: 'scripts/components/common/auth/sign-in/sign-in-d.html',
-        
-        restrict: 'EA',
-
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", "Api", function ($scope, Api)
-        {
-            $scope.login = Api.login;
         }]
     };
 });
