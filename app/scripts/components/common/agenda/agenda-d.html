@@ -1,3 +1,18 @@
 <div class="agenda">
+    <a class="button secondary" href="" ng-click="show.addAppointment=!show.addAppointment">Add Appointment</a>
+    <a class="button secondary" href="" ng-click="show.addTask=!show.addTask">Add Task</a>
 
+    <form action="" ng-if="show.addAppointment">
+        <input type="text" ng-model="appointment.name" placeholder="Appointment Name"/>
+        <input type="text" ng-model="appointment.date" placeholder="Appointment Date and Time"/>
+        <input type="text" ng-model="appointment.location" placeholder="Appointment Location"/>
+        <a class="button" href="" type="submit" ng-click="addTask(appointment)"></a>
+    </form>
+    <form action="" ng-if="show.addTask">
+        <input type="text" ng-model="task.name" placeholder="Task Name"/>
+        <input type="text" ng-model="task.due" placeholder="Due by"/>
+        <a class="button" href="" type="submit" ng-click="addTask(task)">Add Task</a>
+    </form>
+    <div ng-repeat="appointment in userAgenda.schedule"></div>
+    <div ng-repeat="task in userAgenda.tasks"></div>
 </div>

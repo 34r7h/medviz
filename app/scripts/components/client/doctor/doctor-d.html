@@ -10,7 +10,7 @@
                         <b>{{doctorsObject[doctor].address}}</b>
                         <p>{{doctorsObject[doctor]['sector field']}}</p>
                         <p>{{doctorsObject[doctor]['contact number']}}</p>
-                        <code class="clearfix">{{doctorsObject[doctor].city | uppercase}}</code>
+                        <b class="clearfix">{{doctorsObject[doctor].city | uppercase}}</b>
                         <a href="" ng-click="showForm = true" class="button">Begin Visit</a>
                         <visit ng-show="showForm"></visit>
                     </div>

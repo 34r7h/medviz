@@ -19,6 +19,7 @@ angular.module('medviz')
             email:{val:'',type:'email'},
             name:{val:'', type:'text'},
             role:{val:'',type:'text'},
+            company:{val:'',type:'text'},
             agenda:{val:{
               schedule:{},
               tasks:{}
