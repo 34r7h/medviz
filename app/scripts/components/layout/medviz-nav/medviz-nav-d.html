@@ -1,5 +1,11 @@
-<div class="medviz-nav grid-block" ng-init="sections=['client','admin', 'landing']">
-    <br/><p ng-repeat="section in sections" ><a zf-close class="small-12 large button" ui-sref="medviz.{{section}}">
+<div class="medviz-nav" ng-init="sections=['client','admin', 'landing']">
+    <div ng-repeat="section in sections">
+        <div
+                zf-close
+                class="small-12 large button"
+                ui-sref="medviz.{{section}}"
+                ng-style="{width:'100%',height:$parent.$parent.$root.window.height/3+'px'}">
             {{section}}
-        </a></p>
+        </div>
+    </div>
 </div>

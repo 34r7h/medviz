@@ -10,7 +10,6 @@
 angular.module('medviz')
 	.config(function ($stateProvider, $urlRouterProvider) {
 		'use strict';
-
 		$stateProvider
 			.state('medviz', {
 				url: '',

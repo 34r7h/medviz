@@ -1,13 +1,12 @@
 <div class="medviz-header" style="padding: 0;">
     <div class="title-bar dark">
-        <div class="center title">MedViz - {{$root.role}} View</div>
-        <span class="left"><a zf-toggle="menu-left"><strong>Navigation</strong></a></span>
+        <span class="left"><a zf-toggle="menu-left"><strong>Nav</strong></a></span>
         <span class="right">
 
-            <button class="secondary button" ng-click="show.login =! show.login">Account</button>
-            <div ng-style="{position:'fixed', right:'1%', top:'1%', zIndex:9999}" ng-show="show.login">
-                <sign-in></sign-in>
-            </div>
+            <button class="secondary button" ng-click="show.login =! show.login">MedViz: {{$root.name}}</button>
         </span>
+    </div>
+    <div ng-style="{width:$parent.window.width, height:$parent.window.height}" ng-if="show.login">
+        <sign-in></sign-in>
     </div>
 </div>

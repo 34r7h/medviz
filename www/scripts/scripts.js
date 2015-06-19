@@ -27,7 +27,6 @@ angular.module('medviz', [
 angular.module('medviz')
 	.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
 		'use strict';
-
 		$stateProvider
 			.state('medviz', {
 				url: '',
@@ -536,11 +535,11 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.doctors = Data.ref.child('doctors').limitToFirst(100);
+            $scope.doctors = Data.ref.child('doctors')/*.limitToFirst(100)*/;
             $scope.doctorsObject = $firebaseObject($scope.doctors);
             $scope.doctorsArray = $firebaseArray($scope.doctors);
 
-            $scope.doctorsIndex = Data.ref.child('index/doctors').limitToFirst(10);
+            $scope.doctorsIndex = Data.ref.child('index/doctors');
             $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
             $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
         }]
@@ -726,90 +725,6 @@ angular.module('medviz')
         }]
     };
 }]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:features
-* @description
-* # features
-*/
-angular.module('medviz')
-.directive('features', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/features/features-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:fold
-* @description
-* # fold
-*/
-angular.module('medviz')
-.directive('fold', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:testimonials
-* @description
-* # testimonials
-*/
-angular.module('medviz')
-.directive('testimonials', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
@@ -1017,6 +932,90 @@ angular.module('medviz')
 
 /**
 * @ngdoc directive
+* @name medviz.directive:features
+* @description
+* # features
+*/
+angular.module('medviz')
+.directive('features', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/features/features-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:fold
+* @description
+* # fold
+*/
+angular.module('medviz')
+.directive('fold', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:testimonials
+* @description
+* # testimonials
+*/
+angular.module('medviz')
+.directive('testimonials', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
 * @name medviz.directive:medvizFooter
 * @description
 * # medvizFooter
@@ -1059,9 +1058,11 @@ angular.module('medviz')
         {
             scope.data = Data;
         },
-        controller: ["$scope", "$state", function ($scope, $state)
+        controller: ["$scope", "$window", "$rootScope", function ($scope, $window, $rootScope)
         {
-
+            $rootScope.window = {};
+            $rootScope.window.height = $window.innerHeight;
+            $rootScope.window.width = $window.innerWidth;
         }]
     };
 }]);

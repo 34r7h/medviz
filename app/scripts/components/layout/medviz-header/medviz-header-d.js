@@ -16,9 +16,11 @@ angular.module('medviz')
         {
             scope.data = Data;
         },
-        controller: function ($scope, $state)
+        controller: function ($scope, $window, $rootScope)
         {
-
+            $rootScope.window = {};
+            $rootScope.window.height = $window.innerHeight;
+            $rootScope.window.width = $window.innerWidth;
         }
     };
 });

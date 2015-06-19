@@ -22,11 +22,11 @@ angular.module('medviz')
         },
         controller: function ($scope)
         {
-            $scope.doctors = Data.ref.child('doctors').limitToFirst(100);
+            $scope.doctors = Data.ref.child('doctors')/*.limitToFirst(100)*/;
             $scope.doctorsObject = $firebaseObject($scope.doctors);
             $scope.doctorsArray = $firebaseArray($scope.doctors);
 
-            $scope.doctorsIndex = Data.ref.child('index/doctors').limitToFirst(100);
+            $scope.doctorsIndex = Data.ref.child('index/doctors');
             $scope.doctorsIndexObject = $firebaseObject($scope.doctorsIndex);
             $scope.doctorsIndexArray = $firebaseArray($scope.doctorsIndex);
         }
