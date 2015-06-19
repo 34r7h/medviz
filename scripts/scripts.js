@@ -117,7 +117,11 @@ angular.module('medviz')
           users:{
             email:{val:'',type:'email'},
             name:{val:'', type:'text'},
-            role:{val:'',type:'text'}},
+            role:{val:'',type:'text'},
+            agenda:{val:{
+              schedule:{},
+              tasks:{}
+            }, type:'multi'}},
           visits:{
             time:{val: Date.now(),type:'number'},
             rep:{val:'',type:'text'},
@@ -532,7 +536,7 @@ angular.module('medviz')
         },
         controller: ["$scope", function ($scope)
         {
-            $scope.doctors = Data.ref.child('doctors').limitToFirst(1000);
+            $scope.doctors = Data.ref.child('doctors').limitToFirst(100);
             $scope.doctorsObject = $firebaseObject($scope.doctors);
             $scope.doctorsArray = $firebaseArray($scope.doctors);
 
@@ -722,6 +726,90 @@ angular.module('medviz')
         }]
     };
 }]);
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:features
+* @description
+* # features
+*/
+angular.module('medviz')
+.directive('features', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/features/features-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:fold
+* @description
+* # fold
+*/
+angular.module('medviz')
+.directive('fold', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/fold/fold-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
+'use strict';
+
+/**
+* @ngdoc directive
+* @name medviz.directive:testimonials
+* @description
+* # testimonials
+*/
+angular.module('medviz')
+.directive('testimonials', function ()
+{
+    return {
+        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
+        
+        restrict: 'EA',
+        scope: {
+
+        },
+        link: function (scope, el, attrs)
+        {
+
+        },
+        controller: ["$scope", function ($scope)
+        {
+
+        }]
+    };
+});
 'use strict';
 
 /**
@@ -925,90 +1013,6 @@ angular.module('medviz')
 
         return service;
     }]);
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:features
-* @description
-* # features
-*/
-angular.module('medviz')
-.directive('features', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/features/features-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:fold
-* @description
-* # fold
-*/
-angular.module('medviz')
-.directive('fold', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/fold/fold-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
-'use strict';
-
-/**
-* @ngdoc directive
-* @name medviz.directive:testimonials
-* @description
-* # testimonials
-*/
-angular.module('medviz')
-.directive('testimonials', function ()
-{
-    return {
-        templateUrl: 'scripts/components/landing/testimonials/testimonials-d.html',
-        
-        restrict: 'EA',
-        scope: {
-
-        },
-        link: function (scope, el, attrs)
-        {
-
-        },
-        controller: ["$scope", function ($scope)
-        {
-
-        }]
-    };
-});
 'use strict';
 
 /**
